@@ -6,19 +6,18 @@
   NSMutableDictionary *connections;
 
   NSTimeInterval wait;
-  NSData *expect;
+  NSMutableDictionary *expect;
 }
-@property (nonatomic, retain) NSData *expect;
+
 @end
 
-static NSString *kHOST1 = @"localhost:1338";
-//static NSString *kHOST2 = @"localhost:1338";
-//static NSString *kHOST3 = @"localhost:1339";
+static NSString *kHOST1 = @"localhost:1337";
+static NSString *kHOST2 = @"localhost:1338";
+static NSString *kHOST3 = @"localhost:1339";
+static NSString *kHOST4 = @"localhost:1340";
 
 
 @implementation BNConnectionTest
-
-@synthesize expect;
 
 - (BOOL)shouldRunOnMainThread {
   return NO;
@@ -40,6 +39,7 @@ static NSString *kHOST1 = @"localhost:1338";
 
 - (void)setUpClass {
   connections = [[NSMutableDictionary alloc] initWithCapacity:10];
+  expect = [[NSMutableDictionary alloc] initWithCapacity:10];
 
   SEL setup = @selector(setupConnection:);
   [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST1];
@@ -60,7 +60,7 @@ static NSString *kHOST1 = @"localhost:1338";
 - (void)tearDown {
   [NSThread sleepForTimeInterval:0.3];
 
-  GHAssertNil(self.expect, @"Must not be waiting for anything else.");
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
 }
 
 
@@ -84,18 +84,16 @@ static NSString *kHOST1 = @"localhost:1338";
 - (void) connection:(BNConnection *)conn
   receivedDictionary:(NSDictionary *)dict {
 
-  // NSLog(@"conn: %@ received: %@", conn, dict);
+  NSLog(@"conn: %@ received dict", conn, dict);
   NSData *bson = [dict BSONRepresentation];
+  NSData *ex_data = [expect valueForKey:conn.address];
 
-  if (expect)
-    NSLog(@"Expecting: %d Received: %d", [expect length], [bson length]);
-
-  if (expect && [expect isKindOfClass:[NSData class]])
-    GHAssertTrue([expect isEqual:bson], @"Expected dictionary not received.");
+  if (ex_data && [ex_data isKindOfClass:[NSData class]])
+    GHAssertTrue([ex_data isEqual:bson], @"Expected dictionary not received.");
   else
     GHAssertTrue(false, @"Unexpected dictionary received.");
 
-  self.expect = nil;
+  [expect setValue:nil forKey:conn.address];
 }
 
 - (void)testA_Connected {
@@ -108,7 +106,7 @@ static NSString *kHOST1 = @"localhost:1338";
   NSDictionary *dict = [NSMutableDictionary dictionary];
   [dict setValue:@"Herp" forKey:@"Derp"];
 
-  self.expect = [dict BSONRepresentation];
+  [expect setValue:[dict BSONRepresentation] forKey:kHOST1];
 
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
@@ -124,12 +122,12 @@ static NSString *kHOST1 = @"localhost:1338";
 
   NSDictionary *dict = [NSMutableDictionary dictionary];
   [dict setValue:hamlet forKey:@"hamlet"];
-  self.expect = [dict BSONRepresentation];
 
+  [expect setValue:[dict BSONRepresentation] forKey:kHOST1];
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
 
-  for (int i; self.expect && i < 1000000; i++)
+  for (int i; [expect valueForKey:kHOST1] && i < 1000000; i++)
     [NSThread sleepForTimeInterval:1.0];
 }
 
