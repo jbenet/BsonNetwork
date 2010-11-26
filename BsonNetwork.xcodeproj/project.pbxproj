@@ -54,6 +54,7 @@
 		D9D123D0129F4C02003E40C5 /* BNConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D123CD129F4C02003E40C5 /* BNConnection.h */; };
 		D9D123D1129F4C02003E40C5 /* BNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D123CE129F4C02003E40C5 /* BNConnection.m */; };
 		D9D125A6129F85EE003E40C5 /* hamlet.txt in Resources */ = {isa = PBXBuildFile; fileRef = D9D125A5129F85EE003E40C5 /* hamlet.txt */; };
+		D9D127F6129FC058003E40C5 /* RandomObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D127F5129FC058003E40C5 /* RandomObjects.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +98,8 @@
 		D9D123CD129F4C02003E40C5 /* BNConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNConnection.h; sourceTree = "<group>"; };
 		D9D123CE129F4C02003E40C5 /* BNConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNConnection.m; sourceTree = "<group>"; };
 		D9D125A5129F85EE003E40C5 /* hamlet.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hamlet.txt; sourceTree = "<group>"; };
+		D9D127F4129FC058003E40C5 /* RandomObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomObjects.h; sourceTree = "<group>"; };
+		D9D127F5129FC058003E40C5 /* RandomObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjects.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +190,8 @@
 		D9D1219E129EB294003E40C5 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				D9D127F4129FC058003E40C5 /* RandomObjects.h */,
+				D9D127F5129FC058003E40C5 /* RandomObjects.m */,
 				D9D125A5129F85EE003E40C5 /* hamlet.txt */,
 				D9D122F2129F372B003E40C5 /* test_connection.m */,
 			);
@@ -376,6 +381,7 @@
 				D9D122AB129EE460003E40C5 /* BNNetwork.m in Sources */,
 				D9D122F5129F372B003E40C5 /* test_connection.m in Sources */,
 				D9D123CF129F4C02003E40C5 /* BNConnection.m in Sources */,
+				D9D127F6129FC058003E40C5 /* RandomObjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

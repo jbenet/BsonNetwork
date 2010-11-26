@@ -1,5 +1,6 @@
 
 #import "BNConnection.h"
+#import "RandomObjects.h"
 
 @interface BNConnectionTest : GHTestCase <BNConnectionDelegate> {
   AsyncSocket *listenSocket;
@@ -11,7 +12,7 @@
 
 @end
 
-static NSString *kHOST1 = @"localhost:1337";
+static NSString *kHOST1 = @"localhost:1341";
 static NSString *kHOST2 = @"localhost:1338";
 static NSString *kHOST3 = @"localhost:1339";
 static NSString *kHOST4 = @"localhost:1340";
@@ -43,6 +44,9 @@ static NSString *kHOST4 = @"localhost:1340";
 
   SEL setup = @selector(setupConnection:);
   [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST1];
+  [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST2];
+  [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST3];
+  [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST4];
 
 }
 
@@ -84,11 +88,11 @@ static NSString *kHOST4 = @"localhost:1340";
 - (void) connection:(BNConnection *)conn
   receivedDictionary:(NSDictionary *)dict {
 
-  NSLog(@"conn: %@ received dict", conn, dict);
   NSData *bson = [dict BSONRepresentation];
   NSData *ex_data = [expect valueForKey:conn.address];
+  NSLog(@"conn: %@ received. (%d==%d)", conn, [bson length], [ex_data length]);
 
-  if (ex_data && [ex_data isKindOfClass:[NSData class]])
+  if (ex_data != nil && [ex_data isKindOfClass:[NSData class]])
     GHAssertTrue([ex_data isEqual:bson], @"Expected dictionary not received.");
   else
     GHAssertTrue(false, @"Unexpected dictionary received.");
@@ -96,13 +100,47 @@ static NSString *kHOST4 = @"localhost:1340";
   [expect setValue:nil forKey:conn.address];
 }
 
+//------------------------------------------------------------------------------
+
 - (void)testA_Connected {
 
   for (BNConnection *conn in [connections allValues])
     GHAssertTrue(conn.isConnected, @"Make sure connections are connected.");
 }
 
-- (void) testB_BounceSimpleDict {
+- (void) testB_BounceSimpleData {
+  NSDictionary *dict = [NSMutableDictionary dictionary];
+  [dict setValue:@"Herp" forKey:@"Derp"];
+  NSData *data = [dict BSONRepresentation];
+
+  [expect setValue:data forKey:kHOST1];
+
+  BNConnection *conn = [connections valueForKey:kHOST1];
+  GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
+
+}
+
+- (void) testC_BounceLargeData {
+  NSString *path;
+  path = [[NSBundle mainBundle] pathForResource:@"hamlet" ofType: @"txt"];
+  NSString *hamlet = [NSString stringWithContentsOfFile:path
+    encoding:NSUTF8StringEncoding error:NULL];
+
+  NSDictionary *dict = [NSMutableDictionary dictionary];
+  [dict setValue:hamlet forKey:@"hamlet"];
+  NSData *data = [dict BSONRepresentation];
+
+  [expect setValue:data forKey:kHOST1];
+  BNConnection *conn = [connections valueForKey:kHOST1];
+  GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
+
+  // Give it some extra time:
+  for (int i = 0; [expect valueForKey:kHOST1] && i < 1000000; i++)
+    [NSThread sleepForTimeInterval:1.0];
+}
+
+
+- (void) testD_BounceSimpleDict {
   NSDictionary *dict = [NSMutableDictionary dictionary];
   [dict setValue:@"Herp" forKey:@"Derp"];
 
@@ -113,7 +151,7 @@ static NSString *kHOST4 = @"localhost:1340";
 
 }
 
-- (void) testC_BounceLargeDict {
+- (void) testE_BounceLargeDict {
 
   NSString *path;
   path = [[NSBundle mainBundle] pathForResource:@"hamlet" ofType: @"txt"];
@@ -127,14 +165,32 @@ static NSString *kHOST4 = @"localhost:1340";
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
 
-  for (int i; [expect valueForKey:kHOST1] && i < 1000000; i++)
+  // Give it some extra time:
+  for (int i = 0; [expect valueForKey:kHOST1] && i < 1000000; i++)
     [NSThread sleepForTimeInterval:1.0];
 }
 
-- (void) testD_BounceMultiple {
+- (void) testF_BounceDataMultiple {
 
+  NSData *data = [[NSDictionary randomDictionary] BSONRepresentation];
+  [expect setValue:data forKey:kHOST1];
+  [expect setValue:data forKey:kHOST2];
+  [expect setValue:data forKey:kHOST3];
+  [expect setValue:data forKey:kHOST4];
 
+  BNConnection *conn1 = [connections valueForKey:kHOST1];
+  BNConnection *conn2 = [connections valueForKey:kHOST2];
+  BNConnection *conn3 = [connections valueForKey:kHOST3];
+  BNConnection *conn4 = [connections valueForKey:kHOST4];
+
+  GHAssertTrue([conn1 sendBSONData:data] > 0, @"Sending ok.");
+  GHAssertTrue([conn2 sendBSONData:data] > 0, @"Sending ok.");
+  GHAssertTrue([conn3 sendBSONData:data] > 0, @"Sending ok.");
+  GHAssertTrue([conn4 sendBSONData:data] > 0, @"Sending ok.");
 
 }
+
+
+//------------------------------------------------------------------------------
 
 @end
