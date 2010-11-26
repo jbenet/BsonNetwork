@@ -46,7 +46,6 @@ def runBouncer(port):
       print addr,'error (',e,')'
 
 
-
 def main():
   print 'socket bouncer'
   if len(sys.argv) == 2:
