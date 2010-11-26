@@ -1,0 +1,7 @@
+build/
+*.pyc
+*.mode1v3
+*.pbxuser
+.DS_STORE/
+.DS_Store
+
