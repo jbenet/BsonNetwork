@@ -100,6 +100,11 @@ static NSString *kHOST4 = @"localhost:1340";
   [expect setValue:nil forKey:conn.address];
 }
 
+- (void) forceWait {
+  for (int i = 0; [expect valueForKey:kHOST1] && i < 1000000; i++)
+    [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+}
+
 //------------------------------------------------------------------------------
 
 - (void)testA_Connected {
@@ -135,8 +140,7 @@ static NSString *kHOST4 = @"localhost:1340";
   GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
 
   // Give it some extra time:
-  for (int i = 0; [expect valueForKey:kHOST1] && i < 1000000; i++)
-    [NSThread sleepForTimeInterval:1.0];
+  [self forceWait];
 }
 
 
@@ -166,8 +170,7 @@ static NSString *kHOST4 = @"localhost:1340";
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
 
   // Give it some extra time:
-  for (int i = 0; [expect valueForKey:kHOST1] && i < 1000000; i++)
-    [NSThread sleepForTimeInterval:1.0];
+  [self forceWait];
 }
 
 - (void) testF_BounceDataMultiple {
@@ -190,6 +193,56 @@ static NSString *kHOST4 = @"localhost:1340";
 
 }
 
+- (void) testG_LongTest {
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+  [self testF_BounceDataMultiple];
+  [self forceWait];
+  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
+
+}
+
+- (void) testH_ExtraLongTest {
+  [self testG_LongTest];
+  [self testG_LongTest];
+  [self testG_LongTest];
+  [self testG_LongTest];
+  [self testG_LongTest];
+  [self testG_LongTest];
+  [self testG_LongTest];
+  [self testG_LongTest];
+}
 
 //------------------------------------------------------------------------------
 
