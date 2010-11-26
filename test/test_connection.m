@@ -54,11 +54,11 @@ static NSString *kHOST1 = @"localhost:1338";
 }
 
 - (void)setUp {
-  [NSThread sleepForTimeInterval:0.5];
+  [NSThread sleepForTimeInterval:0.3];
 }
 
 - (void)tearDown {
-  [NSThread sleepForTimeInterval:0.5];
+  [NSThread sleepForTimeInterval:0.3];
 
   GHAssertNil(self.expect, @"Must not be waiting for anything else.");
 }
@@ -123,11 +123,20 @@ static NSString *kHOST1 = @"localhost:1338";
     encoding:NSUTF8StringEncoding error:NULL];
 
   NSDictionary *dict = [NSMutableDictionary dictionary];
-  [dict setValue:[hamlet substringToIndex:2000] forKey:@"hamlet"];
+  [dict setValue:hamlet forKey:@"hamlet"];
   self.expect = [dict BSONRepresentation];
 
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
+
+  for (int i; self.expect && i < 1000000; i++)
+    [NSThread sleepForTimeInterval:1.0];
+}
+
+- (void) testD_BounceMultiple {
+
+
+
 }
 
 @end

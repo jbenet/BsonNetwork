@@ -16,7 +16,7 @@ static inline int __lengthOfFirstBSONDocument(NSData *data) {
 static inline BOOL __dataContainsWholeDocument(NSData *data) {
   if ([data length] < 4)
     return NO;
-  return __lengthOfFirstBSONDocument(data) >= [data length];
+  return __lengthOfFirstBSONDocument(data) == [data length];
 }
 
 @implementation BNConnection
@@ -25,7 +25,6 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 @synthesize timeout;
 @synthesize address;
 @synthesize state;
-
 
 #pragma mark Initialization
 
