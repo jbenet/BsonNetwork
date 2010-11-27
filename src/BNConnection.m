@@ -215,7 +215,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
     // NSLog(@"Received: %@", data);
     if ([delegate respondsToSelector:@selector(connection:receivedBSONData:)])
       [delegate connection:self receivedBSONData:buffer];
-    else
+    if ([delegate respondsToSelector:@selector(connection:receivedDictionary:)])
       [delegate connection:self receivedDictionary:[buffer BSONValue]];
     [buffer setLength:0];
     tag = 1;

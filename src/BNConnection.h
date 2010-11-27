@@ -50,7 +50,7 @@ typedef UInt16 BNMessageId;
 - (id) initWithAddress:(NSString *)address;
 - (id) initWithSocket:(AsyncSocket *)socket;
 
-- (BOOL) connect;
+- (BOOL) connect; // returns whether connection is attempted. (AsyncSocket-like)
 - (void) disconnect;
 
 - (BNMessageId) sendDictionary:(NSDictionary *)dictionary;
