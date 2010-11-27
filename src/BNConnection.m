@@ -2,7 +2,7 @@
 #import "BNConnection.h"
 #import "AsyncSocket.h"
 
-static NSTimeInterval kTIMEOUT = -1; // No timeout.
+static NSTimeInterval kDEFAULT_TIMEOUT = -1;
 
 #pragma mark BSON Utils
 
@@ -47,7 +47,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
     socket_.delegate = self;
     [socket_ moveToRunLoop:[NSRunLoop currentRunLoop]]; // idempotent + asserts.
 
-    timeout = kTIMEOUT;
+    timeout = kDEFAULT_TIMEOUT;
     state = socket_.isConnected ? BNConnectionConnected :BNConnectionConnecting;
     buffer = [[NSMutableData alloc] init];
     lastIdUsed = 0;
@@ -60,7 +60,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
     address = [_address copy];
     thread_ = [NSThread currentThread];
     socket_ = [[AsyncSocket alloc] initWithDelegate:self];
-    timeout = kTIMEOUT;
+    timeout = kDEFAULT_TIMEOUT;
     state = BNConnectionDisconnected;
     buffer = [[NSMutableData alloc] init];
     lastIdUsed = 0;
