@@ -1,7 +1,14 @@
 
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
+
+// #define USING_BSONCodec
+
+#ifdef USING_BSONCodec
+#import "BSONCodec.h"
+#else
 #import "NuBSON.h"
+#endif
 
 typedef enum {
   BNConnectionDisconnected = 0,
@@ -11,16 +18,21 @@ typedef enum {
   BNConnectionError,
 } BNConnectionState;
 
+// Notification fo connection managers (like BNServer)
+extern NSString * const BNConnectionDisconnectedNotification;
+extern NSString * const BNConnectionConnectedNotification;
+
 typedef UInt16 BNMessageId;
 
 @class BNConnection;
 
 @protocol BNConnectionDelegate <NSObject>
-- (void) connectionStateDidChange:(BNConnection *)conn;
 - (void) connection:(BNConnection *)conn error:(NSError *)error;
+- (void) connectionStateDidChange:(BNConnection *)conn;
 @optional
 - (void) connection:(BNConnection *)conn didTimeoutSending:(BNMessageId)msgId;
 - (void) connection:(BNConnection *)conn didAcknowledge:(BNMessageId)msgId;
+
 - (void) connection:(BNConnection *)conn receivedBSONData:(NSData *)bson;
 - (void) connection:(BNConnection *)conn
   receivedDictionary:(NSDictionary *)dict;

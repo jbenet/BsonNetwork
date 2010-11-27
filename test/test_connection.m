@@ -8,11 +8,14 @@
 
   NSTimeInterval wait;
   NSMutableDictionary *expect;
+
+  NSString *lastToConnect;
+  NSString *lastToDisconnect;
 }
 
 @end
 
-static NSString *kHOST1 = @"localhost:1341";
+static NSString *kHOST1 = @"localhost:1337";
 static NSString *kHOST2 = @"localhost:1338";
 static NSString *kHOST3 = @"localhost:1339";
 static NSString *kHOST4 = @"localhost:1340";
@@ -41,6 +44,14 @@ static NSString *kHOST4 = @"localhost:1340";
 - (void)setUpClass {
   connections = [[NSMutableDictionary alloc] initWithCapacity:10];
   expect = [[NSMutableDictionary alloc] initWithCapacity:10];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+    selector:@selector(connectionNotification:)
+    name:BNConnectionDisconnectedNotification object:nil];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
+    selector:@selector(connectionNotification:)
+    name:BNConnectionConnectedNotification object:nil];
 
   SEL setup = @selector(setupConnection:);
   [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST1];
@@ -93,7 +104,8 @@ static NSString *kHOST4 = @"localhost:1340";
   NSLog(@"conn: %@ received. (%d==%d)", conn, [bson length], [ex_data length]);
 
   if (ex_data != nil && [ex_data isKindOfClass:[NSData class]])
-    GHAssertTrue([ex_data isEqual:bson], @"Expected dictionary not received.");
+    GHAssertTrue([ex_data isEqualToData:bson],
+      @"Expected dictionary not received.");
   else
     GHAssertTrue(false, @"Unexpected dictionary received.");
 
@@ -101,8 +113,18 @@ static NSString *kHOST4 = @"localhost:1340";
 }
 
 - (void) forceWait {
-  for (int i = 0; [expect valueForKey:kHOST1] && i < 1000000; i++)
+  for (int i = 0; [expect count] > 0 && i < 1000000; i++)
     [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+}
+
+- (void) connectionNotification:(NSNotification *)notification {
+  NSLog(@"Received %@ notification.", notification);
+
+  if ([notification name] == BNConnectionConnectedNotification)
+    lastToConnect = [(BNConnection *)notification.object address];
+
+  else if ([notification name] == BNConnectionDisconnectedNotification)
+    lastToDisconnect = [(BNConnection *)notification.object address];
 }
 
 //------------------------------------------------------------------------------
@@ -242,6 +264,28 @@ static NSString *kHOST4 = @"localhost:1340";
   [self testG_LongTest];
   [self testG_LongTest];
   [self testG_LongTest];
+}
+
+
+
+- (void) testI_NotificationsTest {
+
+  for (BNConnection *conn in [connections allValues]) {
+
+    NSString *add = conn.address;
+
+    [conn disconnect];
+    for (int i = 0; ![lastToDisconnect isEqualToString:add] && i < 10000; i++)
+      [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+    GHAssertTrue([lastToDisconnect isEqualToString:add],
+      @"Last connection to disconnect is not correct.");
+
+    [conn connect];
+    for (int i = 0; ![lastToConnect isEqualToString:add] && i < 10000; i++)
+      [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+    GHAssertTrue([lastToDisconnect isEqualToString:add],
+      @"Last connection to connect is not correct.");
+  }
 }
 
 //------------------------------------------------------------------------------

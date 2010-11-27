@@ -4,12 +4,21 @@
 
 static NSTimeInterval kDEFAULT_TIMEOUT = -1;
 
+NSString * const BNConnectionDisconnectedNotification =
+  @"BNConnectionDisconnected";
+NSString * const BNConnectionConnectedNotification =
+  @"BNConnectionConnected";
+
 #pragma mark BSON Utils
 
 static inline int __lengthOfFirstBSONDocument(NSData *data) {
   int length;
   const void *bytes = [data bytes];
+#ifdef USING_BSONCodec
+  length = BSONTOHOST32(*(uint32_t *)bytes);
+#else // bson.c
   bson_little_endian32(&length, bytes);
+#endif
   return length;
 }
 
@@ -104,7 +113,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   NSMutableArray *array = [NSMutableArray array];
 
   if ([NSThread currentThread] != thread_)
-    [self performSelector:@selector(__safeConnect) onThread:thread_
+    [self performSelector:@selector(__safeConnect:) onThread:thread_
       withObject:array waitUntilDone:YES];
   else
     [self __safeConnect:array];
@@ -176,6 +185,9 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 - (void)onSocketDidDisconnect:(AsyncSocket *)sock {
   state = BNConnectionDisconnected;
   [delegate connectionStateDidChange:self];
+
+  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+  [nc postNotificationName:BNConnectionDisconnectedNotification object:self];
 }
 
 - (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)_socket {
@@ -200,8 +212,11 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host
   port:(UInt16)port {
+
   state = BNConnectionConnected;
   [delegate connectionStateDidChange:self];
+  NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+  [nc postNotificationName:BNConnectionConnectedNotification object:self];
 
   [socket_ readDataWithTimeout:timeout tag:1];
 }
@@ -213,11 +228,13 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
   if (__dataContainsWholeDocument(buffer)) {
     // NSLog(@"Received: %@", data);
+    NSRange docRange = NSMakeRange(0, __lengthOfFirstBSONDocument(buffer));
+    NSData *doc = [buffer subdataWithRange:docRange];
     if ([delegate respondsToSelector:@selector(connection:receivedBSONData:)])
-      [delegate connection:self receivedBSONData:buffer];
+      [delegate connection:self receivedBSONData:doc];
     if ([delegate respondsToSelector:@selector(connection:receivedDictionary:)])
-      [delegate connection:self receivedDictionary:[buffer BSONValue]];
-    [buffer setLength:0];
+      [delegate connection:self receivedDictionary:[doc BSONValue]];
+    [buffer replaceBytesInRange:docRange withBytes:NULL length:0];
     tag = 1;
   }
 
