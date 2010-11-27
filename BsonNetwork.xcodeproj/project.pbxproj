@@ -38,12 +38,10 @@
 		D9D1226D129EC446003E40C5 /* NuBSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12265129EC446003E40C5 /* NuBSON.m */; };
 		D9D1226E129EC446003E40C5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D1225E129EC446003E40C5 /* AsyncSocket.m */; };
 		D9D1226F129EC446003E40C5 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12260129EC446003E40C5 /* AsyncUdpSocket.m */; };
-		D9D12270129EC446003E40C5 /* bson.c in Sources */ = {isa = PBXBuildFile; fileRef = D9D12262129EC446003E40C5 /* bson.c */; };
-		D9D12271129EC446003E40C5 /* NuBSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12265129EC446003E40C5 /* NuBSON.m */; };
 		D9D12277129EC480003E40C5 /* platform_hacks.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D12276129EC480003E40C5 /* platform_hacks.h */; };
-		D9D122A8129EE460003E40C5 /* BNNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D122A4129EE460003E40C5 /* BNNetwork.h */; };
-		D9D122A9129EE460003E40C5 /* BNNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNNetwork.m */; };
-		D9D122AB129EE460003E40C5 /* BNNetwork.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNNetwork.m */; };
+		D9D122A8129EE460003E40C5 /* BNServer.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D122A4129EE460003E40C5 /* BNServer.h */; };
+		D9D122A9129EE460003E40C5 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
+		D9D122AB129EE460003E40C5 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
 		D9D122F5129F372B003E40C5 /* test_connection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122F2129F372B003E40C5 /* test_connection.m */; };
 		D9D1231F129F3C1D003E40C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D1231E129F3C1D003E40C5 /* UIKit.framework */; };
 		D9D1234D129F3D1E003E40C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
@@ -55,6 +53,8 @@
 		D9D123D1129F4C02003E40C5 /* BNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D123CE129F4C02003E40C5 /* BNConnection.m */; };
 		D9D125A6129F85EE003E40C5 /* hamlet.txt in Resources */ = {isa = PBXBuildFile; fileRef = D9D125A5129F85EE003E40C5 /* hamlet.txt */; };
 		D9D127F6129FC058003E40C5 /* RandomObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D127F5129FC058003E40C5 /* RandomObjects.m */; };
+		D9D1299012A1A9FE003E40C5 /* bson.c in Sources */ = {isa = PBXBuildFile; fileRef = D9D12262129EC446003E40C5 /* bson.c */; };
+		D9D1299112A1AA01003E40C5 /* NuBSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12265129EC446003E40C5 /* NuBSON.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,8 +88,8 @@
 		D9D12264129EC446003E40C5 /* NuBSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuBSON.h; sourceTree = "<group>"; };
 		D9D12265129EC446003E40C5 /* NuBSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuBSON.m; sourceTree = "<group>"; };
 		D9D12276129EC480003E40C5 /* platform_hacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform_hacks.h; sourceTree = "<group>"; };
-		D9D122A4129EE460003E40C5 /* BNNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNNetwork.h; sourceTree = "<group>"; };
-		D9D122A5129EE460003E40C5 /* BNNetwork.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNNetwork.m; sourceTree = "<group>"; };
+		D9D122A4129EE460003E40C5 /* BNServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNServer.h; sourceTree = "<group>"; };
+		D9D122A5129EE460003E40C5 /* BNServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNServer.m; sourceTree = "<group>"; };
 		D9D122F2129F372B003E40C5 /* test_connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_connection.m; sourceTree = "<group>"; };
 		D9D12319129F3BCD003E40C5 /* Tests_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tests_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		D9D1231E129F3C1D003E40C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -100,6 +100,8 @@
 		D9D125A5129F85EE003E40C5 /* hamlet.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = hamlet.txt; sourceTree = "<group>"; };
 		D9D127F4129FC058003E40C5 /* RandomObjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RandomObjects.h; sourceTree = "<group>"; };
 		D9D127F5129FC058003E40C5 /* RandomObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjects.m; sourceTree = "<group>"; };
+		D9D1295B12A19DE9003E40C5 /* BSONCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONCodec.h; sourceTree = "<group>"; };
+		D9D1295C12A19DE9003E40C5 /* BSONCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONCodec.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,12 +142,12 @@
 		0867D691FE84028FC02AAC07 /* BsonNetwork */ = {
 			isa = PBXGroup;
 			children = (
-				D9D121BD129EB2E7003E40C5 /* lib */,
-				0867D69AFE84028FC02AAC07 /* frameworks */,
-				034768DFFF38A50411DB9C8B /* products */,
-				D9D1219A129EB294003E40C5 /* resources */,
 				D9D1219D129EB294003E40C5 /* src */,
 				D9D1219E129EB294003E40C5 /* test */,
+				D9D121BD129EB2E7003E40C5 /* lib */,
+				0867D69AFE84028FC02AAC07 /* frameworks */,
+				D9D1219A129EB294003E40C5 /* resources */,
+				034768DFFF38A50411DB9C8B /* products */,
 			);
 			name = BsonNetwork;
 			sourceTree = "<group>";
@@ -180,8 +182,8 @@
 			children = (
 				D9D123CD129F4C02003E40C5 /* BNConnection.h */,
 				D9D123CE129F4C02003E40C5 /* BNConnection.m */,
-				D9D122A4129EE460003E40C5 /* BNNetwork.h */,
-				D9D122A5129EE460003E40C5 /* BNNetwork.m */,
+				D9D122A4129EE460003E40C5 /* BNServer.h */,
+				D9D122A5129EE460003E40C5 /* BNServer.m */,
 				D9D12255129EBB21003E40C5 /* BsonNetwork.h */,
 			);
 			path = src;
@@ -222,6 +224,8 @@
 		D9D12261129EC446003E40C5 /* bson */ = {
 			isa = PBXGroup;
 			children = (
+				D9D1295B12A19DE9003E40C5 /* BSONCodec.h */,
+				D9D1295C12A19DE9003E40C5 /* BSONCodec.m */,
 				D9D12276129EC480003E40C5 /* platform_hacks.h */,
 				D9D12262129EC446003E40C5 /* bson.c */,
 				D9D12263129EC446003E40C5 /* bson.h */,
@@ -245,7 +249,7 @@
 				D9D1226B129EC446003E40C5 /* bson.h in Headers */,
 				D9D1226C129EC446003E40C5 /* NuBSON.h in Headers */,
 				D9D12277129EC480003E40C5 /* platform_hacks.h in Headers */,
-				D9D122A8129EE460003E40C5 /* BNNetwork.h in Headers */,
+				D9D122A8129EE460003E40C5 /* BNServer.h in Headers */,
 				D9D123D0129F4C02003E40C5 /* BNConnection.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -364,7 +368,7 @@
 				D9D12269129EC446003E40C5 /* AsyncUdpSocket.m in Sources */,
 				D9D1226A129EC446003E40C5 /* bson.c in Sources */,
 				D9D1226D129EC446003E40C5 /* NuBSON.m in Sources */,
-				D9D122A9129EE460003E40C5 /* BNNetwork.m in Sources */,
+				D9D122A9129EE460003E40C5 /* BNServer.m in Sources */,
 				D9D123D1129F4C02003E40C5 /* BNConnection.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,12 +380,12 @@
 				D9D12229129EB959003E40C5 /* GHUnitIOSTestMain.m in Sources */,
 				D9D1226E129EC446003E40C5 /* AsyncSocket.m in Sources */,
 				D9D1226F129EC446003E40C5 /* AsyncUdpSocket.m in Sources */,
-				D9D12270129EC446003E40C5 /* bson.c in Sources */,
-				D9D12271129EC446003E40C5 /* NuBSON.m in Sources */,
-				D9D122AB129EE460003E40C5 /* BNNetwork.m in Sources */,
+				D9D122AB129EE460003E40C5 /* BNServer.m in Sources */,
 				D9D122F5129F372B003E40C5 /* test_connection.m in Sources */,
 				D9D123CF129F4C02003E40C5 /* BNConnection.m in Sources */,
 				D9D127F6129FC058003E40C5 /* RandomObjects.m in Sources */,
+				D9D1299012A1A9FE003E40C5 /* bson.c in Sources */,
+				D9D1299112A1AA01003E40C5 /* NuBSON.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
