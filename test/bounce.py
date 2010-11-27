@@ -2,6 +2,7 @@
 
 import sys
 import socket
+import struct
 import bson
 
 def setupListenSocket(port):
@@ -14,12 +15,18 @@ running_data = ''
 def outputBSON(data):
   global running_data
   running_data += data
-  try:
-    d = str(bson.loads(data))
-    print d[0:1000]
-    running_data = ''
-  except Exception, e:
-    print 'partial data:', running_data
+  if len(running_data) < 4:
+    return
+
+  length = struct.unpack('<i', running_data[:4])[0]
+  if len(running_data) < length:
+    return;
+
+  print length
+
+  d = str(bson.loads(running_data[:length]))
+  print length, 'bytes: ', d[0:1000]
+  running_data = running_data[length:]
 
 
 def bounceConnection(conn):
