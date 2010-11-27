@@ -120,7 +120,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 }
 
 - (void) disconnect {
-  if (state = BNConnectionDisconnected)
+  if (state == BNConnectionDisconnected)
     return;
 
   state = BNConnectionDisconnecting;
