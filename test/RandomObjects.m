@@ -45,6 +45,8 @@
 
   if ([array count] > 0)
     return [array autorelease];
+
+  [array release];
   return [NSArray randomArray];
 }
 
@@ -62,6 +64,8 @@
 
   if ([dict count] > 0)
     return [dict autorelease];
+
+  [dict release];
   return [NSDictionary randomDictionary];
 }
 
