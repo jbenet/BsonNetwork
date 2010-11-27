@@ -127,11 +127,13 @@ void add_object_to_bson_buffer(bson_buffer *bb, id key, id object)
     }
     else if ([object isKindOfClass:[NSDictionary class]]) {
         bson_buffer *sub = bson_append_start_object(bb, name);
-        id keys = [object allKeys];
-        for (int i = 0; i < [keys count]; i++) {
-            id key = [keys objectAtIndex:i];
+        NSMutableArray *keys = [[NSMutableArray alloc] init];
+        for (NSString *key in object)
+          [keys addObject:key];
+        [keys sortUsingSelector:@selector(caseInsensitiveCompare:)];
+        for (NSString *key in keys)
             add_object_to_bson_buffer(sub, key, [object objectForKey:key]);
-        }
+        [keys release];
         bson_append_finish_object(sub);
     }
     else if ([object isKindOfClass:[NSArray class]]) {
@@ -193,11 +195,14 @@ void add_object_to_bson_buffer(bson_buffer *bb, id key, id object)
     bson b;
     bson_buffer bb;
     bson_buffer_init(& bb );
-    id keys = [dict allKeys];
-    for (int i = 0; i < [keys count]; i++) {
-        id key = [keys objectAtIndex:i];
+    NSMutableArray *keys = [[NSMutableArray alloc] init];
+    for (NSString *key in dict)
+      [keys addObject:key];
+    [keys sortUsingSelector:@selector(caseInsensitiveCompare:)];
+    for (NSString *key in keys)
         add_object_to_bson_buffer(&bb, key, [dict objectForKey:key]);
-    }
+    [keys release];
+
     bson_from_buffer(&b, &bb);
     return [self initWithBSON:b];
 }
