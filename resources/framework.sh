@@ -56,7 +56,10 @@ cp lib/bson-objc/BSONCodec.h $FRAMEWORK_DIR/Headers/
 
 # Package up
 echo "Framework: packaging tarball..."
-tar -czf $FRAMEWORK_TARBALL $FRAMEWORK_DIR
+cd $FRAMEWORK_BUILD_PATH
+tar -czf $FRAMEWORK_NAME.tar.gz $FRAMEWORK_NAME.framework
+cd ../../
+mv $FRAMEWORK_BUILD_PATH$FRAMEWORK_NAME.tar.gz $FRAMEWORK_TARBALL
 
 # Done :)
 echo "Framework: all done!"
