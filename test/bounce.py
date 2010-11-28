@@ -1,5 +1,12 @@
 #!/usr/bin/env python
 
+#
+#  Part of BsonNetork
+#
+#  Created by Juan Batiz-Benet 2010.
+#  MIT License, see LICENSE file for details.
+#
+
 import sys
 import socket
 import struct

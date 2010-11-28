@@ -1,3 +1,9 @@
+//
+//  Part of BsonNetork
+//
+//  Created by Juan Batiz-Benet 2010.
+//  MIT License, see LICENSE file for details.
+//
 
 #import "BsonNetwork.h"
 
@@ -65,7 +71,7 @@ typedef enum {
   if (isListening)
     listenPort = [listenSocket_ localPort]; // in case we used 0
 
-  DLog(@"[%@] listening on port %d -- %d", self, listenPort, isListening);
+  DebugLog(@"[%@] listening on port %d -- %d", self, listenPort, isListening);
   //TODO notifications? delegate calls?
   return isListening;
 }
@@ -77,14 +83,14 @@ typedef enum {
     return;
   }
 
-  DLog(@"[%@] stop listening", self);
+  DebugLog(@"[%@] stop listening", self);
   //TODO notifications? delegate calls?
   isListening = NO;
   [listenSocket_ disconnect];
 }
 
 - (BOOL) onSocketWillConnect:(AsyncSocket *)sock {
-  DLog(@"[%@]", self);
+  DebugLog(@"[%@]", self);
   return YES;
 }
 
@@ -111,7 +117,7 @@ typedef enum {
     [self.delegate server:self didConnect:conn];
   }
 
-  DLog(@"[%@] accepted %@", self, conn);
+  DebugLog(@"[%@] accepted %@", self, conn);
 
   [conn release];
 }
@@ -135,7 +141,7 @@ typedef enum {
   conn.delegate = self; // for now, until connection is established.
 
   if (![conn connect]) { // could not even connect... AsyncSocket failed.
-    DLog(@"[%@] failed to connect %@", self, conn);
+    DebugLog(@"[%@] failed to connect %@", self, conn);
     NSError *error = [BNServer error:BNErrorAsyncSocketFailed info:address];
     [self.delegate server:self failedToConnect:conn withError:error];
     [conn release];
@@ -143,7 +149,7 @@ typedef enum {
   }
 
   if (conn == nil) { // Odd. Conn is nil? are we thrashing around, or what?
-    DLog(@"[%@] failed to connect %@", self, conn);
+    DebugLog(@"[%@] failed to connect %@", self, conn);
     NSError *error = [BNServer error:BNErrorUnknown info:@"connection is nil"];
     [self.delegate server:self failedToConnect:conn withError:error];
     // [conn release]; it's nil! Added for appeasing OCDs.
@@ -154,7 +160,7 @@ typedef enum {
     [connections_ addObject:conn];
   }
 
-  DLog(@"[%@] connected %@", self, conn);
+  DebugLog(@"[%@] connected %@", self, conn);
 
   [conn release];
 }
@@ -171,7 +177,7 @@ typedef enum {
 #pragma mark Disconnect
 
 - (void) disconnectAllConnections {
-  DLog(@"[%@]", self);
+  DebugLog(@"[%@]", self);
   for (BNConnection *conn in self.connections) // copy for enumeration
     [conn disconnect];
 }
@@ -189,7 +195,7 @@ typedef enum {
 #pragma mark BNConnectionDelegate
 
 - (void) connectionStateDidChange:(BNConnection *)conn {
-  DLog(@"[%@] conn changed: %@", self, conn);
+  DebugLog(@"[%@] conn changed: %@", self, conn);
 
   switch (conn.state) {
     case BNConnectionConnected:
@@ -212,7 +218,7 @@ typedef enum {
 }
 
 - (void) connection:(BNConnection *)conn error:(NSError *)error {
-  DLog(@"[%@] conn %@ error %@", self, conn, [error localizedDescription]);
+  DebugLog(@"[%@] conn %@ error %@", self, conn, [error localizedDescription]);
   [self.delegate server:self error:error];
 }
 

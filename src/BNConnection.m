@@ -1,3 +1,9 @@
+//
+//  Part of BsonNetork
+//
+//  Created by Juan Batiz-Benet 2010.
+//  MIT License, see LICENSE file for details.
+//
 
 #import "BNConnection.h"
 #import "AsyncSocket.h"

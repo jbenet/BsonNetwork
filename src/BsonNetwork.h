@@ -1,4 +1,9 @@
-
+//
+//  Part of BsonNetork
+//
+//  Created by Juan Batiz-Benet 2010.
+//  MIT License, see LICENSE file for details.
+//
 
 #import "BNConnection.h"
 #import "BNServer.h"
@@ -9,9 +14,9 @@
 
 #ifndef DebugLog
   #ifdef BSONNETWORK_DEBUG
-    #define DLog(fmt, ...) NSLog((@"%s [line %d] " fmt), \
+    #define DebugLog(fmt, ...) NSLog((@"%s [line %d] " fmt), \
               __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
   #else
-    #define DLog(...)
+    #define DebugLog(...)
   #endif
 #endif

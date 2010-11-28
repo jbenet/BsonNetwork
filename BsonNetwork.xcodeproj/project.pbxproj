@@ -52,6 +52,7 @@
 		D9D12B7612A27B40003E40C5 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = D9D12B5512A27B40003E40C5 /* LICENSE */; };
 		D9D12B7712A27B40003E40C5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = D9D12B5612A27B40003E40C5 /* README */; };
 		D9D12B7C12A27DE4003E40C5 /* BSONCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12B5412A27B40003E40C5 /* BSONCodec.m */; };
+		D9D12C0512A288F2003E40C5 /* tests_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D12C0412A288F2003E40C5 /* tests_icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -103,6 +104,7 @@
 		D9D12B5C12A27B40003E40C5 /* platform_hacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform_hacks.h; sourceTree = "<group>"; };
 		D9D12BA712A282D3003E40C5 /* BsonNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BsonNetwork.framework; path = build/Framework/BsonNetwork.framework; sourceTree = "<group>"; };
 		D9D12BAA12A282EB003E40C5 /* BsonNetwork.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = BsonNetwork.tar.gz; path = build/Framework/BsonNetwork.tar.gz; sourceTree = "<group>"; };
+		D9D12C0412A288F2003E40C5 /* tests_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tests_icon.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -169,6 +171,7 @@
 		D9D1219A129EB294003E40C5 /* resources */ = {
 			isa = PBXGroup;
 			children = (
+				D9D12C0412A288F2003E40C5 /* tests_icon.png */,
 				D9D12319129F3BCD003E40C5 /* Tests_Prefix.pch */,
 				D9D1221C129EB8FB003E40C5 /* Tests-Info.plist */,
 				AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */,
@@ -336,6 +339,7 @@
 				D9D125A6129F85EE003E40C5 /* hamlet.txt in Resources */,
 				D9D12B7612A27B40003E40C5 /* LICENSE in Resources */,
 				D9D12B7712A27B40003E40C5 /* README in Resources */,
+				D9D12C0512A288F2003E40C5 /* tests_icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
