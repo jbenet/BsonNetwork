@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
 
-// #define USING_BSONCodec
+#define USING_BSONCodec
 
 #ifdef USING_BSONCodec
 #import "BSONCodec.h"

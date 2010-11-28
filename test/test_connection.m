@@ -106,7 +106,11 @@ static NSString *kHOST4 = @"localhost:1340";
   receivedDictionary:(NSDictionary *)dict {
 
   NSData *bson = [dict BSONRepresentation];
-  NSData *ex_data = [expect valueForKey:conn.address];
+  NSData *ex_data = nil;
+
+  @synchronized(expect) {
+    ex_data = [expect valueForKey:conn.address];
+  }
   NSLog(@"conn: %@ received. (%d==%d)", conn, [bson length], [ex_data length]);
 
   if (ex_data != nil && [ex_data isKindOfClass:[NSData class]])
@@ -115,13 +119,15 @@ static NSString *kHOST4 = @"localhost:1340";
   else
     GHAssertTrue(false, @"Unexpected dictionary received.");
 
-  [expect setValue:nil forKey:conn.address];
+  @synchronized(expect) {
+    [expect setValue:nil forKey:conn.address];
+  }
 }
 
 //------------------------------------------------------------------------------
 #pragma mark helpers
 
-- (void) forceWait {
+- (void) forceWaitForExpected {
   for (int i = 0; [expect count] > 0 && i < 1000000; i++)
     [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
 }
@@ -150,7 +156,9 @@ static NSString *kHOST4 = @"localhost:1340";
   [dict setValue:@"Herp" forKey:@"Derp"];
   NSData *data = [dict BSONRepresentation];
 
-  [expect setValue:data forKey:kHOST1];
+  @synchronized(self) {
+    [expect setValue:data forKey:kHOST1];
+  }
 
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
@@ -167,12 +175,14 @@ static NSString *kHOST4 = @"localhost:1340";
   [dict setValue:hamlet forKey:@"hamlet"];
   NSData *data = [dict BSONRepresentation];
 
-  [expect setValue:data forKey:kHOST1];
+  @synchronized(self) {
+    [expect setValue:data forKey:kHOST1];
+  }
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
 
   // Give it some extra time:
-  [self forceWait];
+  [self forceWaitForExpected];
 }
 
 
@@ -180,8 +190,9 @@ static NSString *kHOST4 = @"localhost:1340";
   NSDictionary *dict = [NSMutableDictionary dictionary];
   [dict setValue:@"Herp" forKey:@"Derp"];
 
-  [expect setValue:[dict BSONRepresentation] forKey:kHOST1];
-
+  @synchronized(self) {
+    [expect setValue:[dict BSONRepresentation] forKey:kHOST1];
+  }
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
 
@@ -197,21 +208,25 @@ static NSString *kHOST4 = @"localhost:1340";
   NSDictionary *dict = [NSMutableDictionary dictionary];
   [dict setValue:hamlet forKey:@"hamlet"];
 
-  [expect setValue:[dict BSONRepresentation] forKey:kHOST1];
+  @synchronized(self) {
+    [expect setValue:[dict BSONRepresentation] forKey:kHOST1];
+  }
   BNConnection *conn = [connections valueForKey:kHOST1];
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
 
   // Give it some extra time:
-  [self forceWait];
+  [self forceWaitForExpected];
 }
 
 - (void) testF_BounceDataMultiple {
 
   NSData *data = [[NSDictionary randomDictionary] BSONRepresentation];
-  [expect setValue:data forKey:kHOST1];
-  [expect setValue:data forKey:kHOST2];
-  [expect setValue:data forKey:kHOST3];
-  [expect setValue:data forKey:kHOST4];
+  @synchronized(expect) {
+    [expect setValue:data forKey:kHOST1];
+    [expect setValue:data forKey:kHOST2];
+    [expect setValue:data forKey:kHOST3];
+    [expect setValue:data forKey:kHOST4];
+  }
 
   BNConnection *conn1 = [connections valueForKey:kHOST1];
   BNConnection *conn2 = [connections valueForKey:kHOST2];
@@ -227,42 +242,14 @@ static NSString *kHOST4 = @"localhost:1340";
 
 - (void) testG_LongTest {
 
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
-  [self testF_BounceDataMultiple];
-  [self forceWait];
-  GHAssertTrue([expect count] == 0, @"Must not be waiting for anything else.");
-
+  for (int i = 0; i < 10; i++) {
+    [self testF_BounceDataMultiple];
+    [self forceWaitForExpected];
+    @synchronized(self) {
+      GHAssertTrue([expect count] == 0,
+        @"Must not be waiting for anything else.");
+    }
+  }
 }
 
 - (void) testH_ExtraLongTest {
@@ -275,7 +262,6 @@ static NSString *kHOST4 = @"localhost:1340";
   [self testG_LongTest];
   [self testG_LongTest];
 }
-
 
 
 - (void) testI_NotificationsTest {

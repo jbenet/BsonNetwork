@@ -142,11 +142,17 @@ static NSString *kHOST4 = @"localhost:1340";
 - (void) connection:(BNConnection *)conn
   receivedDictionary:(NSDictionary *)dict {
 
-  int index = [connections indexOfObject:conn];
-  NSString *expect_key = [NSString stringWithFormat:@"%d", index];
+  NSString *expect_key = nil;
+  @synchronized(connections) {
+    int index = [connections indexOfObject:conn];
+    expect_key = [NSString stringWithFormat:@"%d", index];
+  }
 
   NSData *bson = [dict BSONRepresentation];
-  NSData *ex_data = [expect valueForKey:expect_key];
+  NSData *ex_data = nil;
+  @synchronized(expect) {
+    ex_data = [expect valueForKey:expect_key];
+  }
 
   NSLog(@"conn: %@ received. (%d==%d)", conn, [bson length], [ex_data length]);
 
@@ -156,8 +162,19 @@ static NSString *kHOST4 = @"localhost:1340";
   else
     GHAssertTrue(false, @"Unexpected dictionary received.");
 
-  [expect setValue:nil forKey:expect_key];
+  @synchronized(expect) {
+    [expect setValue:nil forKey:expect_key];
+  }
 }
+
+//------------------------------------------------------------------------------
+#pragma mark helpers
+
+- (void) forceWaitForExpected {
+  for (int i = 0; [expect count] > 0 && i < 1000000; i++)
+    [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+}
+
 
 //------------------------------------------------------------------------------
 #pragma mark tests
@@ -188,12 +205,67 @@ static NSString *kHOST4 = @"localhost:1340";
   [dict setValue:@"Herp" forKey:@"Derp"];
   NSData *data = [dict BSONRepresentation];
 
-  // Send data through conn1 -> conn2.
+  // Send data between conn1 <-> conn2.
   BNConnection *conn1 = [connections objectAtIndex:0];
- // BNConnection *conn2 = [connections objectAtIndex:1];
-  [expect setValue:data forKey:[NSString stringWithFormat:@"%d", 1]];
+  // BNConnection *conn2 = [connections objectAtIndex:1];
+  @synchronized(expect) {
+    [expect setValue:data forKey:[NSString stringWithFormat:@"%d", 1]];
+  }
   GHAssertTrue([conn1 sendBSONData:data] > 0, @"Sending ok.");
 }
 
+- (void) testBC_simpleResponse {
+   NSDictionary *dict = [NSMutableDictionary dictionary];
+   [dict setValue:@"Derp" forKey:@"Herp"];
+   NSData *data = [dict BSONRepresentation];
+
+   // Send data between conn1 <-> conn2.
+   // BNConnection *conn1 = [connections objectAtIndex:0];
+   BNConnection *conn2 = [connections objectAtIndex:1];
+   @synchronized(expect) {
+     [expect setValue:data forKey:[NSString stringWithFormat:@"%d", 0]];
+   }
+   GHAssertTrue([conn2 sendBSONData:data] > 0, @"Sending ok.");
+}
+
+- (void) testBD_simpleSimultaneous {
+  NSDictionary *dict = [NSMutableDictionary dictionary];
+  [dict setValue:@"Herp" forKey:@"Derp"];
+  NSData *data = [dict BSONRepresentation];
+
+  // Send data between conn1 <-> conn2.
+  BNConnection *conn1 = [connections objectAtIndex:0];
+  BNConnection *conn2 = [connections objectAtIndex:1];
+  @synchronized(expect) {
+    [expect setValue:data forKey:[NSString stringWithFormat:@"%d", 0]];
+    [expect setValue:data forKey:[NSString stringWithFormat:@"%d", 1]];
+  }
+  GHAssertTrue([conn1 sendBSONData:data] > 0, @"Sending ok.");
+  GHAssertTrue([conn2 sendBSONData:data] > 0, @"Sending ok.");
+}
+
+- (void) testBE_simpleMultiple {
+
+  // Send data between conn1 <-> conn2.
+  BNConnection *conn1 = [connections objectAtIndex:0];
+  BNConnection *conn2 = [connections objectAtIndex:1];
+
+  for (int i = 0; i < 10; i++) {
+    NSData *data1 = [[NSDictionary randomDictionary] BSONRepresentation];
+    NSData *data2 = [[NSDictionary randomDictionary] BSONRepresentation];
+    @synchronized(expect) {
+      [expect setValue:data1 forKey:[NSString stringWithFormat:@"%d", 0]];
+      [expect setValue:data2 forKey:[NSString stringWithFormat:@"%d", 1]];
+    }
+    GHAssertTrue([conn1 sendBSONData:data2] > 0, @"Sending ok.");
+    GHAssertTrue([conn2 sendBSONData:data1] > 0, @"Sending ok.");
+    [self forceWaitForExpected];
+  }
+}
+
+- (void) testBF_simpleMultipleMultiple {
+  for (int i = 0; i < 10; i++)
+    [self testBE_simpleMultiple];
+}
 
 @end
