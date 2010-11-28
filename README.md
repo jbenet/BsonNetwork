@@ -1,6 +1,6 @@
 # BsonNetwork
 
-## BsonNetwork - simple networking
+BsonNetwork - networking as easy as making a dictionary
 
 BsonNetwork seeks to provide a very simple solution for application networking. Using the new BSON standard (http://bsonspec.org/), BsonNetwork allows client applications to open connections and trade BSON documents (dictionaries!) around.
 
