@@ -42,7 +42,6 @@
 		D9D122A8129EE460003E40C5 /* BNServer.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D122A4129EE460003E40C5 /* BNServer.h */; };
 		D9D122A9129EE460003E40C5 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
 		D9D122AB129EE460003E40C5 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
-		D9D122F5129F372B003E40C5 /* test_connection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122F2129F372B003E40C5 /* test_connection.m */; };
 		D9D1231F129F3C1D003E40C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D1231E129F3C1D003E40C5 /* UIKit.framework */; };
 		D9D1234D129F3D1E003E40C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		D9D12352129F3DA5003E40C5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D12351129F3DA5003E40C5 /* CFNetwork.framework */; };
@@ -55,6 +54,7 @@
 		D9D127F6129FC058003E40C5 /* RandomObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D127F5129FC058003E40C5 /* RandomObjects.m */; };
 		D9D1299012A1A9FE003E40C5 /* bson.c in Sources */ = {isa = PBXBuildFile; fileRef = D9D12262129EC446003E40C5 /* bson.c */; };
 		D9D1299112A1AA01003E40C5 /* NuBSON.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12265129EC446003E40C5 /* NuBSON.m */; };
+		D9D129E312A24070003E40C5 /* test_server.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D129E212A24070003E40C5 /* test_server.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +102,7 @@
 		D9D127F5129FC058003E40C5 /* RandomObjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RandomObjects.m; sourceTree = "<group>"; };
 		D9D1295B12A19DE9003E40C5 /* BSONCodec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BSONCodec.h; sourceTree = "<group>"; };
 		D9D1295C12A19DE9003E40C5 /* BSONCodec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BSONCodec.m; sourceTree = "<group>"; };
+		D9D129E212A24070003E40C5 /* test_server.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_server.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +197,7 @@
 				D9D127F5129FC058003E40C5 /* RandomObjects.m */,
 				D9D125A5129F85EE003E40C5 /* hamlet.txt */,
 				D9D122F2129F372B003E40C5 /* test_connection.m */,
+				D9D129E212A24070003E40C5 /* test_server.m */,
 			);
 			path = test;
 			sourceTree = "<group>";
@@ -381,11 +383,11 @@
 				D9D1226E129EC446003E40C5 /* AsyncSocket.m in Sources */,
 				D9D1226F129EC446003E40C5 /* AsyncUdpSocket.m in Sources */,
 				D9D122AB129EE460003E40C5 /* BNServer.m in Sources */,
-				D9D122F5129F372B003E40C5 /* test_connection.m in Sources */,
 				D9D123CF129F4C02003E40C5 /* BNConnection.m in Sources */,
 				D9D127F6129FC058003E40C5 /* RandomObjects.m in Sources */,
 				D9D1299012A1A9FE003E40C5 /* bson.c in Sources */,
 				D9D1299112A1AA01003E40C5 /* NuBSON.m in Sources */,
+				D9D129E312A24070003E40C5 /* test_server.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

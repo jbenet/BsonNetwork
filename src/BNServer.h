@@ -23,15 +23,20 @@
   NSMutableArray *connections_;
 
   id<BNServerDelegate> delegate;
+  BOOL isListening;
 }
 
 @property (nonatomic, readonly) UInt16 listenPort;
+@property (nonatomic, readonly) BOOL isListening;
 
 @property (assign) id<BNServerDelegate> delegate;
 @property (readonly) NSArray *connections;  // connected ones, that is.
 
 - (id) init; // uses default listen port
-- (id) initWithListenPort:(UInt16)port;
+
+- (BOOL) startListeningError:(NSError **)error;
+- (BOOL) startListeningOnPort:(UInt16)_listenPort error:(NSError **)error;
+- (void) stopListening;
 
 - (void) connectToAddress:(NSString *)address;
 - (void) connectToAddresses:(NSArray *)addresses; // to all of them!

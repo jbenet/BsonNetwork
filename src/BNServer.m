@@ -1,5 +1,5 @@
 
-#import "BNServer.h"
+#import "BsonNetwork.h"
 
 static UInt16 kDEFAULT_PORT = 31688;
 
@@ -16,18 +16,14 @@ typedef enum {
 
 @implementation BNServer
 
-@synthesize delegate, listenPort;
+@synthesize delegate, listenPort, isListening;
 
 //------------------------------------------------------------------------------
 #pragma mark Init/Dealloc
 
 - (id) init {
-  return [self initWithListenPort:kDEFAULT_PORT];
-}
-
-- (id) initWithListenPort:(UInt16)port {
   if (self = [super init]) {
-    listenPort = port;
+    listenPort = kDEFAULT_PORT; // flag to say we're not listening...
     thread_ = [NSThread currentThread];
 
     connections_ = [[NSMutableArray alloc] initWithCapacity:10];
@@ -57,22 +53,46 @@ typedef enum {
 }
 
 //------------------------------------------------------------------------------
-#pragma mark Connect
+#pragma mark Listen Socket
 
-- (void) __connectToAddress:(NSString *)address withGroup:(NSString *)group {
-  // Sanitize our input
-  if (address == nil || ![address isKindOfClass:[NSString class]])
-    return;
+- (BOOL) startListeningError:(NSError **)error {
+  return [self startListeningOnPort:listenPort error:error];
+}
 
-  BNConnection *conn = [[BNConnection alloc] initWithAddress:address];
-  conn.delegate = self; // for now, until connection is established.
+- (BOOL) startListeningOnPort:(UInt16)_listenPort error:(NSError **)error {
+  listenPort = _listenPort;
+  isListening = [listenSocket_ acceptOnPort:listenPort error:error];
+  if (isListening)
+    listenPort = [listenSocket_ localPort]; // in case we used 0
 
-  if (![conn connect]) { // could not even connect... AsyncSocket failed.
-    NSError *error = [BNServer error:BNErrorAsyncSocketFailed info:address];
-    [self.delegate server:self failedToConnect:conn withError:error];
-    [conn release];
+  DLog(@"[%@] listening on port %d -- %d", self, listenPort, isListening);
+  //TODO notifications? delegate calls?
+  return isListening;
+}
+
+- (void) stopListening {
+  if ([NSThread currentThread] != thread_) {
+    [self performSelector:@selector(stopListening:) onThread:thread_
+      withObject:nil waitUntilDone:YES];
     return;
   }
+
+  DLog(@"[%@] stop listening", self);
+  //TODO notifications? delegate calls?
+  isListening = NO;
+  [listenSocket_ disconnect];
+}
+
+- (BOOL) onSocketWillConnect:(AsyncSocket *)sock {
+  DLog(@"[%@]", self);
+  return YES;
+}
+
+- (void)onSocket:(AsyncSocket *)listn didAcceptNewSocket:(AsyncSocket *)socket {
+  if (socket == nil)
+    return;
+
+  BNConnection *conn = [[BNConnection alloc] initWithSocket:socket];
 
   if (conn == nil) { // Odd. Conn is nil? are we thrashing around, or what?
     NSError *error = [BNServer error:BNErrorUnknown info:@"connection is nil"];
@@ -85,11 +105,58 @@ typedef enum {
     [connections_ addObject:conn];
   }
 
+  conn.delegate = self;
+  if (conn.isConnected) {
+    conn.delegate = nil;
+    [self.delegate server:self didConnect:conn];
+  }
+
+  DLog(@"[%@] accepted %@", self, conn);
+
   [conn release];
 }
 
+//------------------------------------------------------------------------------
+#pragma mark Connect
+
 - (void) connectToAddress:(NSString *)address {
-  [self __connectToAddress:address withGroup:nil];
+  // Sanitize our input
+  if (address == nil || ![address isKindOfClass:[NSString class]])
+    return;
+
+  // Ensure we initialize connections in our designated thread.
+  if ([NSThread currentThread] != thread_) {
+    [self performSelector:@selector(connectToAddress:) onThread:thread_
+      withObject:address waitUntilDone:YES];
+    return;
+  }
+
+  BNConnection *conn = [[BNConnection alloc] initWithAddress:address];
+  conn.delegate = self; // for now, until connection is established.
+
+  if (![conn connect]) { // could not even connect... AsyncSocket failed.
+    DLog(@"[%@] failed to connect %@", self, conn);
+    NSError *error = [BNServer error:BNErrorAsyncSocketFailed info:address];
+    [self.delegate server:self failedToConnect:conn withError:error];
+    [conn release];
+    return;
+  }
+
+  if (conn == nil) { // Odd. Conn is nil? are we thrashing around, or what?
+    DLog(@"[%@] failed to connect %@", self, conn);
+    NSError *error = [BNServer error:BNErrorUnknown info:@"connection is nil"];
+    [self.delegate server:self failedToConnect:conn withError:error];
+    // [conn release]; it's nil! Added for appeasing OCDs.
+    return;
+  }
+
+  @synchronized(connections_) {
+    [connections_ addObject:conn];
+  }
+
+  DLog(@"[%@] connected %@", self, conn);
+
+  [conn release];
 }
 
 - (void) connectToAddresses:(NSArray *)addresses {
@@ -97,13 +164,14 @@ typedef enum {
     return;
 
   for (NSString *address in addresses)
-    [self __connectToAddress:address withGroup:nil];
+    [self connectToAddress:address];
 }
 
 //------------------------------------------------------------------------------
 #pragma mark Disconnect
 
 - (void) disconnectAllConnections {
+  DLog(@"[%@]", self);
   for (BNConnection *conn in self.connections) // copy for enumeration
     [conn disconnect];
 }
@@ -121,6 +189,8 @@ typedef enum {
 #pragma mark BNConnectionDelegate
 
 - (void) connectionStateDidChange:(BNConnection *)conn {
+  DLog(@"[%@] conn changed: %@", self, conn);
+
   switch (conn.state) {
     case BNConnectionConnected:
       conn.delegate = nil; // no longer us.
@@ -128,7 +198,8 @@ typedef enum {
       break;
 
     case BNConnectionDisconnected:
-      conn.delegate = nil; // We got notified? must've failed.
+      // We got notified? must've failed.
+      conn.delegate = nil;
       NSError *err = [BNServer error:BNErrorConnectionFailed info:conn.address];
       [self.delegate server:self failedToConnect:conn withError:err];
       // No need to remove it; notification will take care of that.
@@ -141,12 +212,22 @@ typedef enum {
 }
 
 - (void) connection:(BNConnection *)conn error:(NSError *)error {
+  DLog(@"[%@] conn %@ error %@", self, conn, [error localizedDescription]);
   [self.delegate server:self error:error];
 }
 
 
 //------------------------------------------------------------------------------
 #pragma mark Utils
+
+- (NSString *) description {
+  int count = 0;
+  @synchronized(connections_) {
+    count = [connections_ count];
+  }
+  return [NSString stringWithFormat:@"BNServer:%d (%d"
+    " connections)", listenPort, count];
+}
 
 - (NSArray *) connections { // copy to prevent callers from mucking with us...
   @synchronized(connections_) {
