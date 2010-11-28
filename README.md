@@ -66,7 +66,20 @@ And when it receives data:
       }
     }
 
+## Install
 
+### Latest Release
+-    download release/BsonNetwork.tar.gz and untar.
+-    put BsonNetwork.framework* in your project.
+-    add (existing apple framework) CFNetwork.framework to your project.
+
+* Note: iPhone developers, do not worry. This .framework is not dynamically linked, it is a static library bundled as a framework for ease of use. I've already submitted apps with libraries bundled the same way. I'll update once BsonNetwork is live in an app.
+
+### Building the Source
+-    clone the repository
+-    open the xcode project
+-    select the Build Framework target
+-    build for both Device Release and Simulator Release.
 
 ## License(s)
 
