@@ -1,6 +1,7 @@
 
 #import "BNConnection.h"
 #import "AsyncSocket.h"
+#import "platform_hacks.h"
 
 static NSTimeInterval kDEFAULT_TIMEOUT = -1;
 
@@ -14,18 +15,14 @@ NSString * const BNConnectionConnectedNotification =
 static inline int __lengthOfFirstBSONDocument(NSData *data) {
   int length;
   const void *bytes = [data bytes];
-#ifdef USING_BSONCodec
-  length = BSONTOHOST32(*(uint32_t *)bytes);
-#else // bson.c
   bson_little_endian32(&length, bytes);
-#endif
   return length;
 }
 
 static inline BOOL __dataContainsWholeDocument(NSData *data) {
   if ([data length] < 4)
     return NO;
-  return __lengthOfFirstBSONDocument(data) == [data length];
+  return __lengthOfFirstBSONDocument(data) <= [data length];
 }
 
 @implementation BNConnection

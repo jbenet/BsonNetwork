@@ -21,6 +21,12 @@
 
 @end
 
+// NOTE!!! to run these tests, run:
+// % tests/bounce.py 1337
+// % tests/bounce.py 1338
+// % tests/bounce.py 1339
+// % tests/bounce.py 1340
+
 static NSString *kHOST1 = @"localhost:1337";
 static NSString *kHOST2 = @"localhost:1338";
 static NSString *kHOST3 = @"localhost:1339";

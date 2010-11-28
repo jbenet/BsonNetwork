@@ -1,0 +1,3 @@
+[submodule "lib/bson-objc"]
+	path = lib/bson-objc
+	url = git@github.com:jbenet/bson-objc.git
