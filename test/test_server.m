@@ -2,6 +2,12 @@
 #import "BNServer.h"
 #import "RandomObjects.h"
 
+#ifndef WAIT_WHILE
+#define WAIT_WHILE(condition) \
+  for (int i = 0; (condition) && i < 10000; i++) \
+    [NSThread sleepForTimeInterval:0.5]; // main thread apparently.
+#endif
+
 @interface BNServerTest : GHTestCase <BNConnectionDelegate, BNServerDelegate> {
 
   NSMutableArray *connections;
@@ -61,8 +67,8 @@ static NSString *kHOST4 = @"localhost:1340";
   [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST3];
   [NSThread detachNewThreadSelector:setup toTarget:self withObject:kHOST4];
 
-  for (int i = 0; [servers count] != 4 && i < 10000; i++)
-    [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+  WAIT_WHILE([servers count] < 4);
+
 }
 
 - (void) tearDownClass {
@@ -115,7 +121,7 @@ static NSString *kHOST4 = @"localhost:1340";
     case BNConnectionConnected: break; // don't care... wont get it.
     case BNConnectionDisconnected:
       @synchronized(connections) {
-        [connections removeObject:conn.address];
+        [connections removeObject:conn];
       }
       // No need to remove it; notification will take care of that.
       break;
@@ -170,9 +176,9 @@ static NSString *kHOST4 = @"localhost:1340";
 //------------------------------------------------------------------------------
 #pragma mark helpers
 
-- (void) forceWaitForExpected {
-  for (int i = 0; [expect count] > 0 && i < 1000000; i++)
-    [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+- (void) waitForAllExpected {
+  WAIT_WHILE([expect count] > 0);
+  GHAssertTrue([expect count] == 0, @"Should be expecting nothing else.");
 }
 
 
@@ -184,18 +190,19 @@ static NSString *kHOST4 = @"localhost:1340";
     GHAssertTrue(server.isListening, @"Should be listening now.");
 }
 
-- (void) testBA_simpleConnection {
+- (void) testBA_simpleConnect {
 
   BNServer *serv1 = [servers valueForKey:kHOST1];
   [serv1 connectToAddress:kHOST2];
 
-  for (int i = 0; [connections count] < 2 && i < 10000; i++)
-    [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+  WAIT_WHILE([connections count] < 2);
 
   BNConnection *conn1 = [connections objectAtIndex:0];
   BNConnection *conn2 = [connections objectAtIndex:1];
   GHAssertNotNil(conn1, @"Connection should be established.");
   GHAssertNotNil(conn2, @"Connection should be established.");
+  GHAssertTrue(conn1.isConnected, @"Connection should be established.");
+  GHAssertTrue(conn2.isConnected, @"Connection should be established.");
   // GHAssertEqualObjects(conn1.address, kHOST1, @"Addresses must match.");
   // GHAssertEqualObjects(conn2.address, kHOST2, @"Addresses must match.");
 }
@@ -259,13 +266,154 @@ static NSString *kHOST4 = @"localhost:1340";
     }
     GHAssertTrue([conn1 sendBSONData:data2] > 0, @"Sending ok.");
     GHAssertTrue([conn2 sendBSONData:data1] > 0, @"Sending ok.");
-    [self forceWaitForExpected];
+    [self waitForAllExpected];
   }
 }
 
 - (void) testBF_simpleMultipleMultiple {
   for (int i = 0; i < 10; i++)
     [self testBE_simpleMultiple];
+}
+
+- (void) testBG_simpleDisconnect {
+
+  if ([connections count] == 0)
+    [self testBA_simpleConnect];
+
+  BNConnection *conn1 = [connections objectAtIndex:0];
+  // BNConnection *conn2 = [connections objectAtIndex:1];
+  [conn1 disconnect];
+
+  WAIT_WHILE([connections count] > 0);
+
+  GHAssertTrue([connections count] == 0, @"Should have no open connections.");
+}
+
+- (void) testCA_allConnect {
+
+  int nextCount;
+  NSString *address;
+  for (BNServer *servA in [servers allValues]) {
+
+    for (BNServer *servB in [servers allValues]) {
+      // DO test connection to self :) :)
+      nextCount = [connections count] + 2; // 2 conns per link.
+
+      address = [NSString stringWithFormat:@"localhost:%d", servB.listenPort];
+      [servA connectToAddress:address];
+
+      WAIT_WHILE([connections count] < nextCount);
+    }
+
+    for (BNConnection *conn in connections)
+      GHAssertTrue(conn.isConnected, @"Connection should be established.");
+  }
+
+  GHAssertTrue([connections count] == 2 * [servers count] * [servers count],
+    @"Should have (2 * # servers * # servers) connections");
+}
+
+- (void) testCB_allSending {
+  NSDictionary *dict = [NSMutableDictionary dictionary];
+  [dict setValue:@"Herp" forKey:@"Derp"];
+  NSData *data = [dict BSONRepresentation];
+
+  // Send data between conn pairs.
+  for (int i = 0; i < [connections count]; i += 2) { // every two.
+    BNConnection *conn = [connections objectAtIndex:i];
+    @synchronized(expect) {
+      [expect setValue:data forKey:[NSString stringWithFormat:@"%d", i + 1]];
+    }
+    GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
+  }
+}
+
+- (void) testCC_allResponse {
+  NSDictionary *dict = [NSMutableDictionary dictionary];
+  [dict setValue:@"Derp" forKey:@"Herp"];
+  NSData *data = [dict BSONRepresentation];
+
+  // Send data between conn pairs.
+  for (int i = 0; i < [connections count]; i += 2) { // every two.
+    BNConnection *conn = [connections objectAtIndex:i + 1];
+    @synchronized(expect) {
+      [expect setValue:data forKey:[NSString stringWithFormat:@"%d", i]];
+    }
+    GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
+  }
+}
+
+
+- (void) testCD_allSimultaneous {
+  NSDictionary *dict = [NSMutableDictionary dictionary];
+  [dict setValue:@"Herp" forKey:@"Derp"];
+  NSData *data = [dict BSONRepresentation];
+
+  // Send data between conn pairs.
+  for (int i = 0; i < [connections count]; i += 2) { // every two.
+    BNConnection *conn1 = [connections objectAtIndex:i];
+    BNConnection *conn2 = [connections objectAtIndex:i + 1];
+    @synchronized(expect) {
+      [expect setValue:data forKey:[NSString stringWithFormat:@"%d", i]];
+      [expect setValue:data forKey:[NSString stringWithFormat:@"%d", i + 1]];
+    }
+    GHAssertTrue([conn1 sendBSONData:data] > 0, @"Sending ok.");
+    GHAssertTrue([conn2 sendBSONData:data] > 0, @"Sending ok.");
+  }
+}
+
+- (void) testCE_allMultiple {
+
+  // Send data between conn pairs.
+  for (int j = 0; j < 10; j++) {
+    NSData *data1 = [[NSDictionary randomDictionary] BSONRepresentation];
+    NSData *data2 = [[NSDictionary randomDictionary] BSONRepresentation];
+
+    for (int i = 0; i < [connections count]; i += 2) { // every two.
+      BNConnection *conn1 = [connections objectAtIndex:i];
+      BNConnection *conn2 = [connections objectAtIndex:i + 1];
+      @synchronized(expect) {
+        [expect setValue:data1 forKey:[NSString stringWithFormat:@"%d", i]];
+        [expect setValue:data2 forKey:[NSString stringWithFormat:@"%d", i + 1]];
+      }
+      GHAssertTrue([conn1 sendBSONData:data2] > 0, @"Sending ok.");
+      GHAssertTrue([conn2 sendBSONData:data1] > 0, @"Sending ok.");
+    }
+
+    [self waitForAllExpected];
+  }
+}
+
+- (void) testCF_allMultipleMultiple {
+
+  for (int i = 0; i < 10; i++)
+    [self testCE_allMultiple];
+
+}
+
+- (void) testCG_allDisconnect {
+
+  if ([connections count] == 0)
+    [self testCA_allConnect];
+
+  int firstHalf = [connections count] / 2;
+  for (int i = 0; i < firstHalf; i += 2) { // every two.
+
+    BNConnection *conn1 = [connections objectAtIndex:i];
+    // BNConnection *conn2 = [connections objectAtIndex:1];
+    [conn1 disconnect];
+  }
+
+  WAIT_WHILE([connections count] > firstHalf);
+
+  GHAssertTrue([connections count] == firstHalf, @"Should only have half now.");
+
+  for (BNServer *serv in [servers allValues])
+    [serv disconnectAllConnections];
+
+  WAIT_WHILE([connections count] > 0);
+
+  GHAssertTrue([connections count] == 0, @"Should have none now.");
 }
 
 @end

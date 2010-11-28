@@ -2,6 +2,12 @@
 #import "BNConnection.h"
 #import "RandomObjects.h"
 
+#ifndef WAIT_WHILE
+#define WAIT_WHILE(condition) \
+  for (int i = 0; (condition) && i < 10000; i++) \
+    [NSThread sleepForTimeInterval:0.5]; // main thread apparently.
+#endif
+
 @interface BNConnectionTest : GHTestCase <BNConnectionDelegate> {
   AsyncSocket *listenSocket;
   NSMutableDictionary *connections;
@@ -127,9 +133,9 @@ static NSString *kHOST4 = @"localhost:1340";
 //------------------------------------------------------------------------------
 #pragma mark helpers
 
-- (void) forceWaitForExpected {
-  for (int i = 0; [expect count] > 0 && i < 1000000; i++)
-    [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+- (void) waitForAllExpected {
+  WAIT_WHILE([expect count] > 0);
+  GHAssertTrue([expect count] == 0, @"Should be expecting nothing else.");
 }
 
 - (void) connectionNotification:(NSNotification *)notification {
@@ -182,7 +188,7 @@ static NSString *kHOST4 = @"localhost:1340";
   GHAssertTrue([conn sendBSONData:data] > 0, @"Sending ok.");
 
   // Give it some extra time:
-  [self forceWaitForExpected];
+  [self waitForAllExpected];
 }
 
 
@@ -215,7 +221,7 @@ static NSString *kHOST4 = @"localhost:1340";
   GHAssertTrue([conn sendDictionary:dict] > 0, @"Sending ok.");
 
   // Give it some extra time:
-  [self forceWaitForExpected];
+  [self waitForAllExpected];
 }
 
 - (void) testF_BounceDataMultiple {
@@ -244,11 +250,7 @@ static NSString *kHOST4 = @"localhost:1340";
 
   for (int i = 0; i < 10; i++) {
     [self testF_BounceDataMultiple];
-    [self forceWaitForExpected];
-    @synchronized(self) {
-      GHAssertTrue([expect count] == 0,
-        @"Must not be waiting for anything else.");
-    }
+    [self waitForAllExpected];
   }
 }
 
@@ -271,14 +273,13 @@ static NSString *kHOST4 = @"localhost:1340";
     NSString *add = conn.address;
 
     [conn disconnect];
-    for (int i = 0; ![lastToDisconnect isEqualToString:add] && i < 10000; i++)
-      [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+    WAIT_WHILE(![lastToDisconnect isEqualToString:add]);
     GHAssertTrue([lastToDisconnect isEqualToString:add],
       @"Last connection to disconnect is not correct.");
 
     [conn connect];
-    for (int i = 0; ![lastToConnect isEqualToString:add] && i < 10000; i++)
-      [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
+
+    WAIT_WHILE(![lastToConnect isEqualToString:add]);
     GHAssertTrue([lastToDisconnect isEqualToString:add],
       @"Last connection to connect is not correct.");
   }
