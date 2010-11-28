@@ -72,7 +72,7 @@ And when it receives data:
 
 ### BsonNetwork Licence
 
-BsonNetwork is released under the MIT License, copyright 2010 Juan Batiz-Benet.
+The BsonNetwork source is released under the MIT License, copyright 2010 Juan Batiz-Benet.
 The source is available at http://github.com/jbenet/bsonnetwork
 
 ### Libraries in use:
