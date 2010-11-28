@@ -23,6 +23,9 @@ static NSString *kHOST4 = @"localhost:1340";
 
 @implementation BNConnectionTest
 
+//------------------------------------------------------------------------------
+#pragma mark setup
+
 - (BOOL)shouldRunOnMainThread {
   return NO;
 }
@@ -79,6 +82,9 @@ static NSString *kHOST4 = @"localhost:1340";
 }
 
 
+//------------------------------------------------------------------------------
+#pragma mark connection delegate
+
 - (void) connectionStateDidChange:(BNConnection *)conn {
   NSLog(@"conn: %@ state: %d", conn, conn.state);
 }
@@ -112,6 +118,9 @@ static NSString *kHOST4 = @"localhost:1340";
   [expect setValue:nil forKey:conn.address];
 }
 
+//------------------------------------------------------------------------------
+#pragma mark helpers
+
 - (void) forceWait {
   for (int i = 0; [expect count] > 0 && i < 1000000; i++)
     [NSThread sleepForTimeInterval:1.0]; // main thread apparently.
@@ -128,6 +137,7 @@ static NSString *kHOST4 = @"localhost:1340";
 }
 
 //------------------------------------------------------------------------------
+#pragma mark tests
 
 - (void)testA_Connected {
 

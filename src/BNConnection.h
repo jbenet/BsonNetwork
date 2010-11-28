@@ -52,7 +52,15 @@ typedef UInt16 BNMessageId;
 }
 
 @property (nonatomic, readonly) BNConnectionState state;
-@property (nonatomic, readonly) NSString *address;
+@property (nonatomic, readonly) NSString *address; // address inited with.
+
+@property (nonatomic, readonly) UInt16 localPort;
+@property (nonatomic, readonly) NSString *localAddress;
+@property (nonatomic, readonly) NSString *localHost;
+
+@property (nonatomic, readonly) UInt16 connectedPort;
+@property (nonatomic, readonly) NSString *connectedAddress;
+@property (nonatomic, readonly) NSString *connectedHost;
 
 @property (nonatomic, assign) id<BNConnectionDelegate> delegate;
 @property (nonatomic, assign) NSTimeInterval timeout;
@@ -68,6 +76,7 @@ typedef UInt16 BNMessageId;
 - (BNMessageId) sendDictionary:(NSDictionary *)dictionary;
 - (BNMessageId) sendBSONData:(NSData *)data;
 
++ (NSString *) addressWithHost:(NSString *)host andPort:(UInt16)port;
 + (void) extractHost:(NSString **)host andPort:(UInt16 *)port
   fromAddress:(NSString *)address;
 

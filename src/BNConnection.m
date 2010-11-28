@@ -46,10 +46,9 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 - (id) initWithSocket:(AsyncSocket *)_socket {
   if (self = [super init]) {
     NSAssert(_socket != nil, @"Given socket must not be nil.");
-    socket_ = _socket;
+    socket_ = [_socket retain];
 
-    address = [[NSString stringWithFormat:@"%@:%hu", socket_.connectedHost,
-    socket_.connectedPort] retain];
+    address = nil; // will get set by connection.
     thread_ = [NSThread currentThread];
 
     NSAssert([socket_ canSafelySetDelegate], @"Ensure delegate is ok.");
@@ -174,6 +173,34 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   return [self sendBSONData:[dictionary BSONRepresentation]];
 }
 
+
+//------------------------------------------------------------------------------
+#pragma mark Address Accessors
+
+- (NSString *) localAddress {
+  return [[self class] addressWithHost:[socket_ localHost]
+    andPort:[socket_ localPort]];
+}
+
+- (NSString *) connectedAddress {
+  return [[self class] addressWithHost:[socket_ connectedHost]
+    andPort:[socket_ connectedPort]];
+}
+
+- (NSString *) connectedHost {
+  return [socket_ connectedHost];
+}
+- (UInt16) connectedPort {
+  return [socket_ connectedPort];
+}
+
+- (NSString *) localHost {
+  return [socket_ localHost];
+}
+- (UInt16) localPort {
+  return [socket_ localPort];
+}
+
 //------------------------------------------------------------------------------
 #pragma mark AsyncSocket Delegate
 
@@ -190,7 +217,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   [nc postNotificationName:BNConnectionDisconnectedNotification object:self];
 }
 
-- (void)onSocket:(AsyncSocket *)sock didAcceptNewSocket:(AsyncSocket *)_socket {
+- (void) onSocket:(AsyncSocket *)lstn didAcceptNewSocket:(AsyncSocket *)sock {
   [NSException raise:@"BNConnectionSocketMisuse"
     format:@"Connection accepted a new socket. This should not happen."];
 }
@@ -202,7 +229,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   return [NSRunLoop currentRunLoop];
 }
 
-- (BOOL)onSocketWillConnect:(AsyncSocket *)sock {
+- (BOOL) onSocketWillConnect:(AsyncSocket *)sock {
   if (socket_ == sock);
     return YES;
 
@@ -212,6 +239,9 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host
   port:(UInt16)port {
+
+  if (address == nil)
+    address = [[[self class] addressWithHost:host andPort:port] retain];
 
   state = BNConnectionConnected;
   [delegate connectionStateDidChange:self];
@@ -244,6 +274,10 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
 //------------------------------------------------------------------------------
 #pragma mark utils
+
++ (NSString *) addressWithHost:(NSString *)host andPort:(UInt16)port {
+  return [NSString stringWithFormat:@"%@:%d", host, port];
+}
 
 + (void) extractHost:(NSString **)host andPort:(UInt16 *)port
   fromAddress:(NSString *)address {
