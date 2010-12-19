@@ -1,10 +1,10 @@
 # BsonNetwork
 
-BsonNetwork - networking as easy as making a dictionary
+## networking as easy as making a dictionary
 
-BsonNetwork seeks to provide a very simple solution for application networking. Using the new BSON standard (http://bsonspec.org/), BsonNetwork allows client applications to open connections and trade BSON documents (dictionaries!) around.
+BsonNetwork seeks to provide a very simple solution for application networking. Using the new [BSON standard](http://bsonspec.org/), BsonNetwork allows client applications to open connections and trade BSON documents (dictionaries!) around.
 
-For now, BsonNetwork is only in Objective-C, enabling iPhones to talk to each other by trading NSDictionaries. I plan to add the (trivial) python implementation soon.
+For now, BsonNetwork is only in Objective-C, enabling Macs and iPhones to talk to each other by trading NSDictionaries. I plan to add the (trivial) python implementation soon.
 
 ## Usage
 
