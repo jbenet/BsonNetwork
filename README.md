@@ -17,9 +17,9 @@ Use BNServer to manage and/or to listen for incoming connection, like so:
     BNServer *server = [[BNServer alloc] init];
     server.delegate = self;
 
-    NSError *error = nil;
-    [server startListeningOnPort:31688 error:&error];
-    // Don't forget to check error values! :)
+    if (![server startListeningOnPort:31688]) {
+      // oh uh. listening failed.
+    }
 
     [server connectToAddress:@"localhost:31688"];
     // yes, we can connect to ourselves
