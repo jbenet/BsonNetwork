@@ -91,7 +91,7 @@ typedef enum {
   }
 
   NSError *error = nil;
-  isListening = [listenSocket_ acceptOnPort:listenPort error:error];
+  isListening = [listenSocket_ acceptOnPort:listenPort error:&error];
   if (isListening)
     listenPort = [listenSocket_ localPort]; // in case we used 0
 
