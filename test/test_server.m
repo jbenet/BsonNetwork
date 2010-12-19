@@ -54,7 +54,7 @@ static NSString *kHOST4 = @"localhost:1340";
   }
 
   GHAssertFalse(server.isListening, @"Server shouldn't be listening yet...");
-  GHAssertTrue([server startListeningOnPort:port error:NULL],
+  GHAssertTrue([server startListeningOnPort:port],
     @"Should be able to begin listening.");
 
   [[NSRunLoop currentRunLoop] run];

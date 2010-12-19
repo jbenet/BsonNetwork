@@ -28,9 +28,13 @@ typedef enum {
 #pragma mark Init/Dealloc
 
 - (id) init {
+  return [self initWithThread:[NSThread currentThread]];
+}
+
+- (id) initWithThread:(NSThread *)_thread {
   if (self = [super init]) {
     listenPort = kDEFAULT_PORT; // flag to say we're not listening...
-    thread_ = [NSThread currentThread];
+    thread_ = _thread;
 
     connections_ = [[NSMutableArray alloc] initWithCapacity:10];
 
@@ -46,6 +50,12 @@ typedef enum {
 }
 
 - (void) dealloc {
+  if ([NSThread currentThread] != thread_) {
+    [self performSelector:@selector(dealloc) onThread:thread_
+      withObject:nil waitUntilDone:YES];
+    return;
+  }
+
   // stop accepting.
   [listenSocket_ setDelegate:nil];
   [listenSocket_ disconnect];
@@ -61,12 +71,26 @@ typedef enum {
 //------------------------------------------------------------------------------
 #pragma mark Listen Socket
 
-- (BOOL) startListeningError:(NSError **)error {
-  return [self startListeningOnPort:listenPort error:error];
+- (BOOL) startListening {
+  return [self startListeningOnPort:listenPort];
 }
 
-- (BOOL) startListeningOnPort:(UInt16)_listenPort error:(NSError **)error {
+- (BOOL) startListeningOnPort:(UInt16)_listenPort {
+  if (isListening && listenPort == _listenPort)
+    return isListening;
+
+  if (isListening)
+    [self stopListening];
+
   listenPort = _listenPort;
+
+  if ([NSThread currentThread] != thread_) {
+    [self performSelector:@selector(startListening) onThread:thread_
+      withObject:nil waitUntilDone:YES];
+    return isListening;
+  }
+
+  NSError *error = nil;
   isListening = [listenSocket_ acceptOnPort:listenPort error:error];
   if (isListening)
     listenPort = [listenSocket_ localPort]; // in case we used 0
@@ -78,7 +102,7 @@ typedef enum {
 
 - (void) stopListening {
   if ([NSThread currentThread] != thread_) {
-    [self performSelector:@selector(stopListening:) onThread:thread_
+    [self performSelector:@selector(stopListening) onThread:thread_
       withObject:nil waitUntilDone:YES];
     return;
   }
@@ -177,6 +201,12 @@ typedef enum {
 #pragma mark Disconnect
 
 - (void) disconnectAllConnections {
+  if ([NSThread currentThread] != thread_) {
+    [self performSelector:@selector(disconnectAllConnections) onThread:thread_
+      withObject:nil waitUntilDone:YES];
+    return;
+  }
+
   DebugLog(@"[%@]", self);
   for (BNConnection *conn in self.connections) // copy for enumeration
     [conn disconnect];

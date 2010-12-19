@@ -38,10 +38,12 @@
 @property (assign) id<BNServerDelegate> delegate;
 @property (readonly) NSArray *connections;  // connected ones, that is.
 
-- (id) init; // uses default listen port
+// using default listen port:
+- (id) init; // with Current thread;
+- (id) initWithThread:(NSThread *)thread;
 
-- (BOOL) startListeningError:(NSError **)error;
-- (BOOL) startListeningOnPort:(UInt16)_listenPort error:(NSError **)error;
+- (BOOL) startListening;
+- (BOOL) startListeningOnPort:(UInt16)_listenPorr;
 - (void) stopListening;
 
 - (void) connectToAddress:(NSString *)address;

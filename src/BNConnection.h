@@ -31,8 +31,9 @@ typedef UInt16 BNMessageId;
 - (void) connection:(BNConnection *)conn error:(NSError *)error;
 - (void) connectionStateDidChange:(BNConnection *)conn;
 @optional
-- (void) connection:(BNConnection *)conn didTimeoutSending:(BNMessageId)msgId;
-- (void) connection:(BNConnection *)conn didAcknowledge:(BNMessageId)msgId;
+// Unused:
+// - (void) connection:(BNConnection *)conn didTimeoutSending:(BNMessageId)msgId;
+// - (void) connection:(BNConnection *)conn didAcknowledge:(BNMessageId)msgId;
 
 - (void) connection:(BNConnection *)conn receivedBSONData:(NSData *)bson;
 - (void) connection:(BNConnection *)conn
