@@ -10,17 +10,27 @@
 @implementation NSObject (RandomObjects)
 
 + (NSObject *) randomObject {
-  int random = arc4random() % 12;
+  int random = arc4random() % 25;
   switch (random) {
-    case 0:
+    case 0: return [NSNumber numberWithLong:arc4random() % 10000000];
     case 1:
     case 3: return [NSNumber numberWithInt:arc4random() % 10000];
-    case 2:
+    case 2: return [NSNumber numberWithFloat:(arc4random() % 10000) / 10000.0];
     case 4: return [NSNumber numberWithDouble:(arc4random() % 10000) / 10000.0];
     case 5:
     case 6: return [NSString randomStringOfLength:(arc4random() % 1000) + 1];
-    case 7: return [NSDictionary randomDictionary];
-    case 8: return [NSArray randomArray];
+    case 8: return [NSDictionary randomDictionary];
+    case 10: return [NSArray randomArray];
+    case 11:
+    case 12: return [NSNumber numberWithChar:arc4random() % 126];
+    case 13: return [NSNumber numberWithBool:NO];
+    case 14: return [NSNumber numberWithBool:YES];
+    case 15:
+    case 16: return [NSNumber numberWithShort:arc4random() % 1000];
+    case 17:
+    case 18: return [NSNumber numberWithShort:arc4random() % 1000];
+    case 19:
+    case 20: return [NSData dataWithBytes:"aBcDeFg" length:7];
   }
   return nil;
 }
