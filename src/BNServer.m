@@ -217,7 +217,7 @@ typedef enum {
 
 - (void) __connectionDisconnected:(NSNotification *)notification {
   @synchronized(connections_) {
-    [connections_ removeObject:notification];
+    [connections_ removeObject:[notification object]];
   }
 }
 
