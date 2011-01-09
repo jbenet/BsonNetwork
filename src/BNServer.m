@@ -6,6 +6,7 @@
 //
 
 #import "BsonNetwork.h"
+#import "PortMapper.h"
 
 static UInt16 kDEFAULT_PORT = 31688;
 
@@ -17,12 +18,13 @@ typedef enum {
 } BNError;
 
 @interface BNServer (Private)
+- (void) __portMappingOpen;
 + (NSError *) error:(BNError)errorCode info:(NSString *)info;
 @end
 
 @implementation BNServer
 
-@synthesize delegate, listenPort, isListening;
+@synthesize delegate, listenPort, isListening, portMappingEnabled;
 
 //------------------------------------------------------------------------------
 #pragma mark Init/Dealloc
@@ -39,6 +41,9 @@ typedef enum {
     connections_ = [[NSMutableArray alloc] initWithCapacity:10];
 
     listenSocket_ = [[AsyncSocket alloc] initWithDelegate:self];
+    [listenSocket_ setRunLoopModes:
+      [NSArray arrayWithObject:NSRunLoopCommonModes]];
+
     delegate = nil;
 
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -56,6 +61,9 @@ typedef enum {
     return;
   }
 
+  // Unmap
+  [mapper_ release];
+
   // stop accepting.
   [listenSocket_ setDelegate:nil];
   [listenSocket_ disconnect];
@@ -68,8 +76,10 @@ typedef enum {
   [super dealloc];
 }
 
+
 //------------------------------------------------------------------------------
 #pragma mark Listen Socket
+
 
 - (BOOL) startListening {
   return [self startListeningOnPort:listenPort];
@@ -97,6 +107,9 @@ typedef enum {
 
   DebugLog(@"[%@] listening on port %d -- %d", self, listenPort, isListening);
   //TODO notifications? delegate calls?
+
+  if (portMappingEnabled)
+    [self __portMappingOpen];
   return isListening;
 }
 
@@ -110,6 +123,7 @@ typedef enum {
   DebugLog(@"[%@] stop listening", self);
   //TODO notifications? delegate calls?
   isListening = NO;
+  [mapper_ close]; //TODO(jbenet) perhaps dont close, to avoid others using it?
   [listenSocket_ disconnect];
 }
 
@@ -144,6 +158,68 @@ typedef enum {
   DebugLog(@"[%@] accepted %@", self, conn);
 
   [conn release];
+}
+
+//------------------------------------------------------------------------------
+#pragma mark Port Mapping
+
+- (void) __portMappingOpen {
+  if (!mapper_)
+    mapper_ = [[PortMapper alloc] initWithPort:listenPort];
+
+  mapper_.desiredPublicPort = listenPort;
+  if ([mapper_ open]) {
+    NSLog(@"[%@] requesting mapping for port %d", self, listenPort);
+
+    [[NSNotificationCenter defaultCenter] addObserver:self
+      selector:@selector(__portMappingChanged:)
+      name:PortMapperChangedNotification  object:mapper_];
+
+  } else {
+    NSLog(@"[%@] Error: PortMapper failed to start: %i", self, mapper_.error);
+    [mapper_ release];
+    mapper_ = nil;
+  }
+}
+
+- (void) __portMappingChanged:(NSNotification*)notification {
+  if (!mapper_) {
+    NSLog(@"[%@] Received mapping notification without a mapper.", self);
+    return;
+  }
+
+  if (mapper_.error) {
+    NSLog(@"[%@] PortMapper error %i", self, mapper_.error);
+    return;
+  }
+
+  NSLog(@"[%@] obtained public mapping at %@:%d", self,
+    mapper_.publicAddress, mapper_.publicPort);
+}
+
+- (NSString *) mappedAddress {
+  if (mapper_ == nil || mapper_.publicPort == 0)
+    return nil;
+
+  return [BNConnection addressWithHost:mapper_.publicAddress
+    andPort:mapper_.publicPort];
+}
+
+- (void) setPortMappingEnabled:(BOOL)enabled {
+  @synchronized(self) {
+    if (enabled == portMappingEnabled)
+      return; // idempotent...
+
+    portMappingEnabled = enabled;
+
+    [mapper_ release];
+    mapper_ = nil;
+
+    if (enabled && isListening) {
+      mapper_ = [[PortMapper alloc] initWithPort:listenPort];
+      [self __portMappingOpen];  // already listening! open it!
+    }
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -299,5 +375,6 @@ typedef enum {
   return [NSError errorWithDomain:BNServerErrorDomain code:errorCode
     userInfo:dict];
 }
+
 
 @end

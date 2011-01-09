@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
 #import "BNConnection.h"
+#import "PortMapper.h"
 
 @class BNServer;
 
@@ -22,15 +23,20 @@
 
 @interface BNServer : NSObject <AsyncSocketDelegate, BNConnectionDelegate> {
 
-  UInt16 listenPort;
+  PortMapper* mapper_;
   AsyncSocket *listenSocket_;
 
   NSThread *thread_; // for socket thread safety and not blocking main thread.
   NSMutableArray *connections_;
 
   id<BNServerDelegate> delegate;
+  BOOL portMappingEnabled;
+  UInt16 listenPort;
   BOOL isListening;
 }
+
+@property (nonatomic) BOOL portMappingEnabled;
+@property (nonatomic, readonly) NSString *mappedAddress;
 
 @property (nonatomic, readonly) UInt16 listenPort;
 @property (nonatomic, readonly) BOOL isListening;

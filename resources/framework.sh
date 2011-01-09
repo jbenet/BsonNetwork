@@ -54,6 +54,7 @@ cp Resources/Framework.plist $FRAMEWORK_DIR/Resources/Info.plist
 cp src/*.h $FRAMEWORK_DIR/Headers/
 cp lib/bson-objc/BSONCodec.h $FRAMEWORK_DIR/Headers/
 cp lib/cas/AsyncSocket.h $FRAMEWORK_DIR/Headers/
+cp lib/PortMapper.h $FRAMEWORK_DIR/Headers/
 
 # Package up
 echo "Framework: packaging tarball..."

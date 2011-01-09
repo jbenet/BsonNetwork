@@ -24,6 +24,9 @@
 /* Begin PBXBuildFile section */
 		AA747D9F0F9514B9006C5449 /* BsonNetwork_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		D981F13612C314B100AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
+		D981F13712C314B800AA5617 /* PortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D981F13412C314B100AA5617 /* PortMapper.h */; };
+		D981F13812C314B800AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
 		D9D12229129EB959003E40C5 /* GHUnitIOSTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12228129EB959003E40C5 /* GHUnitIOSTestMain.m */; };
 		D9D1222A129EB968003E40C5 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */; };
 		D9D12257129EBB21003E40C5 /* BsonNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D12255129EBB21003E40C5 /* BsonNetwork.h */; };
@@ -69,6 +72,8 @@
 		AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BsonNetwork_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libBsonNetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBsonNetwork.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D981F13412C314B100AA5617 /* PortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortMapper.h; sourceTree = "<group>"; };
+		D981F13512C314B100AA5617 /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
 		D9D1219B129EB294003E40C5 /* Framework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Framework.plist; sourceTree = "<group>"; };
 		D9D1219C129EB294003E40C5 /* framework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = framework.sh; sourceTree = "<group>"; };
 		D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = lib/GHUnitIOS.framework; sourceTree = "<group>"; };
@@ -208,6 +213,8 @@
 		D9D121BD129EB2E7003E40C5 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				D981F13412C314B100AA5617 /* PortMapper.h */,
+				D981F13512C314B100AA5617 /* PortMapper.m */,
 				D9D12B2912A27B40003E40C5 /* bson-objc */,
 				D9D12B5712A27B40003E40C5 /* NuBSON */,
 				D9D1225C129EC446003E40C5 /* cas */,
@@ -263,6 +270,7 @@
 				D9D12268129EC446003E40C5 /* AsyncUdpSocket.h in Headers */,
 				D9D122A8129EE460003E40C5 /* BNServer.h in Headers */,
 				D9D123D0129F4C02003E40C5 /* BNConnection.h in Headers */,
+				D981F13712C314B800AA5617 /* PortMapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -384,6 +392,7 @@
 				D9D122A9129EE460003E40C5 /* BNServer.m in Sources */,
 				D9D123D1129F4C02003E40C5 /* BNConnection.m in Sources */,
 				D9D12B7C12A27DE4003E40C5 /* BSONCodec.m in Sources */,
+				D981F13812C314B800AA5617 /* PortMapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -400,6 +409,7 @@
 				D9D129E312A24070003E40C5 /* test_server.m in Sources */,
 				D9D12AEE12A26CAA003E40C5 /* test_connection.m in Sources */,
 				D9D12B7512A27B40003E40C5 /* BSONCodec.m in Sources */,
+				D981F13612C314B100AA5617 /* PortMapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -482,7 +492,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Release;
 		};
