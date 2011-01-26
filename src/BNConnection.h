@@ -46,7 +46,7 @@ typedef UInt16 BNMessageId;
   NSString *address;
   AsyncSocket *socket_;
   NSThread *thread_; // for socket thread safety
-  NSMutableData *buffer;
+  NSMutableData *buffer_;
 
   NSTimeInterval timeout;
   BNConnectionState state;

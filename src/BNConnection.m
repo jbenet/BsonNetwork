@@ -60,7 +60,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
     timeout = kDEFAULT_TIMEOUT;
     state = socket_.isConnected ? BNConnectionConnected :BNConnectionConnecting;
-    buffer = [[NSMutableData alloc] init];
+    buffer_ = [[NSMutableData alloc] init];
     lastIdUsed = 0;
   }
   return self;
@@ -73,7 +73,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
     socket_ = [[AsyncSocket alloc] initWithDelegate:self];
     timeout = kDEFAULT_TIMEOUT;
     state = BNConnectionDisconnected;
-    buffer = [[NSMutableData alloc] init];
+    buffer_ = [[NSMutableData alloc] init];
     lastIdUsed = 0;
   }
   return self;
@@ -85,7 +85,8 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   [socket_ release];
 
   [address release];
-  [buffer release];
+  [buffer_ release];
+  buffer_ = nil;
   [super dealloc];
 }
 
@@ -97,6 +98,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   UInt16 port = 0;
   [[self class] extractHost:&host andPort:&port fromAddress:address];
 
+  socket_.delegate = self;
   NSError *e = nil;
   if (![socket_ connectToHost:host onPort:port withTimeout:timeout error:&e]) {
     [delegate connection:self error:e];
@@ -218,6 +220,8 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
   NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
   [nc postNotificationName:BNConnectionDisconnectedNotification object:self];
+  if (sock.delegate == self)
+    sock.delegate = nil;
 }
 
 - (void) onSocket:(AsyncSocket *)lstn didAcceptNewSocket:(AsyncSocket *)sock {
@@ -256,18 +260,22 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data
   withTag:(long)tag {
+  if (!buffer_) {
+    // NSLog(@"Connection without a buffer received data.");
+    return;
+  }
 
-  [buffer appendData:data];
+  [buffer_ appendData:data];
 
-  if (__dataContainsWholeDocument(buffer)) {
+  if (__dataContainsWholeDocument(buffer_)) {
     // NSLog(@"Received: %@", data);
-    NSRange docRange = NSMakeRange(0, __lengthOfFirstBSONDocument(buffer));
-    NSData *doc = [buffer subdataWithRange:docRange];
+    NSRange docRange = NSMakeRange(0, __lengthOfFirstBSONDocument(buffer_));
+    NSData *doc = [buffer_ subdataWithRange:docRange];
     if ([delegate respondsToSelector:@selector(connection:receivedBSONData:)])
       [delegate connection:self receivedBSONData:doc];
     if ([delegate respondsToSelector:@selector(connection:receivedDictionary:)])
       [delegate connection:self receivedDictionary:[doc BSONValue]];
-    [buffer replaceBytesInRange:docRange withBytes:NULL length:0];
+    [buffer_ replaceBytesInRange:docRange withBytes:NULL length:0];
     tag = 1;
   }
 

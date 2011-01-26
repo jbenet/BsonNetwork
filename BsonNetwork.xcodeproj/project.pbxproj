@@ -443,6 +443,7 @@
 				GCC_PREFIX_HEADER = BsonNetwork_Prefix.pch;
 				INSTALL_PATH = /usr/local/lib;
 				PRODUCT_NAME = BsonNetwork;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -479,7 +480,7 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 			};
 			name = Debug;
 		};
@@ -529,7 +530,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				STRIP_STYLE = debugging;
 			};
 			name = Debug;
@@ -558,7 +559,7 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = Tests;
-				SDKROOT = iphoneos4.1;
+				SDKROOT = iphoneos;
 				ZERO_LINK = NO;
 			};
 			name = Release;
