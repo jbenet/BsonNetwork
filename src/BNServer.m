@@ -34,7 +34,7 @@ typedef enum {
 }
 
 - (id) initWithThread:(NSThread *)_thread {
-  if (self = [super init]) {
+  if ((self = [super init])) {
     listenPort = kDEFAULT_PORT; // flag to say we're not listening...
     thread_ = _thread;
 
@@ -333,7 +333,7 @@ typedef enum {
 #pragma mark Utils
 
 - (NSString *) description {
-  int count = 0;
+  NSUInteger count = 0;
   @synchronized(connections_) {
     count = [connections_ count];
   }

@@ -47,7 +47,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 }
 
 - (id) initWithSocket:(AsyncSocket *)_socket {
-  if (self = [super init]) {
+  if ((self = [super init])) {
     NSAssert(_socket != nil, @"Given socket must not be nil.");
     socket_ = [_socket retain];
 
@@ -67,7 +67,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 }
 
 - (id) initWithAddress:(NSString *)_address {
-  if (self = [super init]) {
+  if ((self = [super init])) {
     address = [_address copy];
     thread_ = [NSThread currentThread];
     socket_ = [[AsyncSocket alloc] initWithDelegate:self];
@@ -237,11 +237,13 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 }
 
 - (BOOL) onSocketWillConnect:(AsyncSocket *)sock {
-  if (socket_ == sock);
+  if (socket_ == sock)
     return YES;
 
   [NSException raise:@"BNConnectionSocketMisuse"
     format:@"Connection will connect to other socket. This should not happen."];
+
+  return NO;
 }
 
 - (void)onSocket:(AsyncSocket *)sock didConnectToHost:(NSString *)host

@@ -24,6 +24,21 @@
 /* Begin PBXBuildFile section */
 		AA747D9F0F9514B9006C5449 /* BsonNetwork_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		D9040DC813BF08F200568F07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9040DC613BF08F200568F07 /* InfoPlist.strings */; };
+		D9040DE213BF0B0000568F07 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9040DE113BF0B0000568F07 /* GHUnit.framework */; };
+		D9040DE413BF0B3400568F07 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9040DE313BF0B2400568F07 /* Cocoa.framework */; };
+		D9040DE813BF0C3D00568F07 /* GHUnitTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DE713BF0C3D00568F07 /* GHUnitTestMain.m */; };
+		D9040DE913BF0C7D00568F07 /* test_connection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122F2129F372B003E40C5 /* test_connection.m */; };
+		D9040DEA13BF0C7D00568F07 /* test_server.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D129E212A24070003E40C5 /* test_server.m */; };
+		D9040DEB13BF0ED200568F07 /* BNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D123CE129F4C02003E40C5 /* BNConnection.m */; };
+		D9040DEC13BF0ED200568F07 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
+		D9040DED13BF0ED700568F07 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
+		D9040DEE13BF0EE500568F07 /* BSONCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12B5412A27B40003E40C5 /* BSONCodec.m */; };
+		D9040DEF13BF0EF500568F07 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D1225E129EC446003E40C5 /* AsyncSocket.m */; };
+		D9040DF013BF0EF500568F07 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12260129EC446003E40C5 /* AsyncUdpSocket.m */; };
+		D9040DF113BF0EFF00568F07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		D9040DF513BF137000568F07 /* GHUnit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = D9040DE113BF0B0000568F07 /* GHUnit.framework */; };
+		D9040DF613BF173F00568F07 /* RandomObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D127F5129FC058003E40C5 /* RandomObjects.m */; };
 		D981F13612C314B100AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
 		D981F13712C314B800AA5617 /* PortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D981F13412C314B100AA5617 /* PortMapper.h */; };
 		D981F13812C314B800AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
@@ -68,17 +83,39 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D9040DE513BF0BBF00568F07 /* Copy Files */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D9040DF513BF137000568F07 /* GHUnit.framework in Copy Files */,
+			);
+			name = "Copy Files";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BsonNetwork_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libBsonNetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBsonNetwork.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9040DBA13BF08F200568F07 /* MacTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9040DC713BF08F200568F07 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D9040DDB13BF09C300568F07 /* MacTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MacTests-Info.plist"; sourceTree = "<group>"; };
+		D9040DDC13BF09C300568F07 /* MacTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MacTests-Prefix.pch"; sourceTree = "<group>"; };
+		D9040DDD13BF09C300568F07 /* Tests_Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Tests_Prefix.pch; sourceTree = "<group>"; };
+		D9040DDE13BF09C400568F07 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
+		D9040DE113BF0B0000568F07 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = lib/GHUnit.framework; sourceTree = "<group>"; };
+		D9040DE313BF0B2400568F07 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
+		D9040DE713BF0C3D00568F07 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUnitTestMain.m; sourceTree = "<group>"; };
 		D981F13412C314B100AA5617 /* PortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortMapper.h; sourceTree = "<group>"; };
 		D981F13512C314B100AA5617 /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
 		D9D1219B129EB294003E40C5 /* Framework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Framework.plist; sourceTree = "<group>"; };
 		D9D1219C129EB294003E40C5 /* framework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = framework.sh; sourceTree = "<group>"; };
 		D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = lib/GHUnitIOS.framework; sourceTree = "<group>"; };
 		D9D1221A129EB8FB003E40C5 /* Tests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tests.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		D9D1221C129EB8FB003E40C5 /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Tests-Info.plist"; path = "../Tests-Info.plist"; sourceTree = "<group>"; };
 		D9D12228129EB959003E40C5 /* GHUnitIOSTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUnitIOSTestMain.m; sourceTree = "<group>"; };
 		D9D12255129EBB21003E40C5 /* BsonNetwork.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BsonNetwork.h; sourceTree = "<group>"; };
 		D9D1225D129EC446003E40C5 /* AsyncSocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AsyncSocket.h; sourceTree = "<group>"; };
@@ -88,7 +125,6 @@
 		D9D122A4129EE460003E40C5 /* BNServer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNServer.h; sourceTree = "<group>"; };
 		D9D122A5129EE460003E40C5 /* BNServer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNServer.m; sourceTree = "<group>"; };
 		D9D122F2129F372B003E40C5 /* test_connection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_connection.m; sourceTree = "<group>"; };
-		D9D12319129F3BCD003E40C5 /* Tests_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tests_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		D9D1231E129F3C1D003E40C5 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		D9D12351129F3DA5003E40C5 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		D9D12366129F3DC7003E40C5 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -122,6 +158,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9040DB713BF08F100568F07 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9040DE213BF0B0000568F07 /* GHUnit.framework in Frameworks */,
+				D9040DE413BF0B3400568F07 /* Cocoa.framework in Frameworks */,
+				D9040DF113BF0EFF00568F07 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D9D12218129EB8FB003E40C5 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -144,6 +190,7 @@
 				D9D12BA712A282D3003E40C5 /* BsonNetwork.framework */,
 				D2AAC07E0554694100DB518D /* libBsonNetwork.a */,
 				D9D1221A129EB8FB003E40C5 /* Tests.app */,
+				D9040DBA13BF08F200568F07 /* MacTests.app */,
 			);
 			name = products;
 			sourceTree = "<group>";
@@ -164,6 +211,8 @@
 		0867D69AFE84028FC02AAC07 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D9040DE313BF0B2400568F07 /* Cocoa.framework */,
+				D9040DE113BF0B0000568F07 /* GHUnit.framework */,
 				D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */,
 				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
 				D9D1231E129F3C1D003E40C5 /* UIKit.framework */,
@@ -177,10 +226,13 @@
 			isa = PBXGroup;
 			children = (
 				D9D12C0412A288F2003E40C5 /* tests_icon.png */,
-				D9D12319129F3BCD003E40C5 /* Tests_Prefix.pch */,
-				D9D1221C129EB8FB003E40C5 /* Tests-Info.plist */,
 				AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */,
+				D9040DDB13BF09C300568F07 /* MacTests-Info.plist */,
+				D9040DDC13BF09C300568F07 /* MacTests-Prefix.pch */,
+				D9040DDD13BF09C300568F07 /* Tests_Prefix.pch */,
+				D9040DDE13BF09C400568F07 /* Tests-Info.plist */,
 				D9D1219B129EB294003E40C5 /* Framework.plist */,
+				D9040DC613BF08F200568F07 /* InfoPlist.strings */,
 				D9D1219C129EB294003E40C5 /* framework.sh */,
 			);
 			path = resources;
@@ -213,6 +265,7 @@
 		D9D121BD129EB2E7003E40C5 /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				D9040DE713BF0C3D00568F07 /* GHUnitTestMain.m */,
 				D981F13412C314B100AA5617 /* PortMapper.h */,
 				D981F13512C314B100AA5617 /* PortMapper.m */,
 				D9D12B2912A27B40003E40C5 /* bson-objc */,
@@ -295,6 +348,24 @@
 			productReference = D2AAC07E0554694100DB518D /* libBsonNetwork.a */;
 			productType = "com.apple.product-type.library.static";
 		};
+		D9040DB913BF08F100568F07 /* MacTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9040DD713BF08F200568F07 /* Build configuration list for PBXNativeTarget "MacTests" */;
+			buildPhases = (
+				D9040DB613BF08F100568F07 /* Sources */,
+				D9040DB713BF08F100568F07 /* Frameworks */,
+				D9040DB813BF08F100568F07 /* Resources */,
+				D9040DE513BF0BBF00568F07 /* Copy Files */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MacTests;
+			productName = MacTests;
+			productReference = D9040DBA13BF08F200568F07 /* MacTests.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D9D12219129EB8FB003E40C5 /* Tests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D9D1221F129EB8FC003E40C5 /* Build configuration list for PBXNativeTarget "Tests" */;
@@ -326,6 +397,7 @@
 				Japanese,
 				French,
 				German,
+				en,
 			);
 			mainGroup = 0867D691FE84028FC02AAC07 /* BsonNetwork */;
 			productRefGroup = 034768DFFF38A50411DB9C8B /* products */;
@@ -335,11 +407,20 @@
 				D2AAC07D0554694100DB518D /* BsonNetwork */,
 				D9D12219129EB8FB003E40C5 /* Tests */,
 				D9D12239129EBA0E003E40C5 /* Build framework */,
+				D9040DB913BF08F100568F07 /* MacTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		D9040DB813BF08F100568F07 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9040DC813BF08F200568F07 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D9D12216129EB8FB003E40C5 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -396,6 +477,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D9040DB613BF08F100568F07 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9040DE813BF0C3D00568F07 /* GHUnitTestMain.m in Sources */,
+				D9040DE913BF0C7D00568F07 /* test_connection.m in Sources */,
+				D9040DEA13BF0C7D00568F07 /* test_server.m in Sources */,
+				D9040DEB13BF0ED200568F07 /* BNConnection.m in Sources */,
+				D9040DEC13BF0ED200568F07 /* BNServer.m in Sources */,
+				D9040DED13BF0ED700568F07 /* PortMapper.m in Sources */,
+				D9040DEE13BF0EE500568F07 /* BSONCodec.m in Sources */,
+				D9040DEF13BF0EF500568F07 /* AsyncSocket.m in Sources */,
+				D9040DF013BF0EF500568F07 /* AsyncUdpSocket.m in Sources */,
+				D9040DF613BF173F00568F07 /* RandomObjects.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D9D12217129EB8FB003E40C5 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -422,6 +520,18 @@
 			targetProxy = D9D1223C129EBA15003E40C5 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D9040DC613BF08F200568F07 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D9040DC713BF08F200568F07 /* en */,
+			);
+			name = InfoPlist.strings;
+			path = ../MacTests;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB921F08733DC00010E9CD /* Debug */ = {
@@ -494,6 +604,61 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
 				SDKROOT = iphoneos;
+			};
+			name = Release;
+		};
+		D9040DD513BF08F200568F07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "resources/MacTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "resources/MacTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D9040DD613BF08F200568F07 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "resources/MacTests-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				INFOPLIST_FILE = "resources/MacTests-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
 		};
@@ -605,6 +770,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		D9040DD713BF08F200568F07 /* Build configuration list for PBXNativeTarget "MacTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9040DD513BF08F200568F07 /* Debug */,
+				D9040DD613BF08F200568F07 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		D9D1221F129EB8FC003E40C5 /* Build configuration list for PBXNativeTarget "Tests" */ = {
 			isa = XCConfigurationList;

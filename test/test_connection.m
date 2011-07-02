@@ -124,15 +124,15 @@ static NSString *kHOST4 = @"localhost:1340";
   receivedDictionary:(NSDictionary *)dict {
 
   NSData *bson = [dict BSONRepresentation];
-  NSData *ex_data = nil;
+  NSData *xdata = nil;
 
   @synchronized(expect) {
-    ex_data = [expect valueForKey:conn.address];
+    xdata = [expect valueForKey:conn.address];
   }
-  NSLog(@"conn: %@ received. (%d==%d)", conn, [bson length], [ex_data length]);
+  NSLog(@"conn: %@ received. (%lu==%lu)", conn, [bson length], [xdata length]);
 
-  if (ex_data != nil && [ex_data isKindOfClass:[NSData class]])
-    GHAssertTrue([ex_data isEqualToData:bson],
+  if (xdata != nil && [xdata isKindOfClass:[NSData class]])
+    GHAssertTrue([xdata isEqualToData:bson],
       @"Expected dictionary not received.");
   else
     GHAssertTrue(false, @"Unexpected dictionary received.");
