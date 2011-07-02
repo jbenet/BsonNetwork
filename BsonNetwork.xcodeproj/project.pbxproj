@@ -39,6 +39,10 @@
 		D9040DF113BF0EFF00568F07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		D9040DF513BF137000568F07 /* GHUnit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = D9040DE113BF0B0000568F07 /* GHUnit.framework */; };
 		D9040DF613BF173F00568F07 /* RandomObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D127F5129FC058003E40C5 /* RandomObjects.m */; };
+		D9040DF913BF70BC00568F07 /* BNNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D9040DF713BF70BB00568F07 /* BNNode.h */; };
+		D9040DFA13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
+		D9040DFB13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
+		D9040DFC13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
 		D981F13612C314B100AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
 		D981F13712C314B800AA5617 /* PortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D981F13412C314B100AA5617 /* PortMapper.h */; };
 		D981F13812C314B800AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
@@ -110,6 +114,8 @@
 		D9040DE113BF0B0000568F07 /* GHUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnit.framework; path = lib/GHUnit.framework; sourceTree = "<group>"; };
 		D9040DE313BF0B2400568F07 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = SDKs/MacOSX10.6.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		D9040DE713BF0C3D00568F07 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUnitTestMain.m; sourceTree = "<group>"; };
+		D9040DF713BF70BB00568F07 /* BNNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNNode.h; sourceTree = "<group>"; };
+		D9040DF813BF70BB00568F07 /* BNNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNNode.m; sourceTree = "<group>"; };
 		D981F13412C314B100AA5617 /* PortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortMapper.h; sourceTree = "<group>"; };
 		D981F13512C314B100AA5617 /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
 		D9D1219B129EB294003E40C5 /* Framework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Framework.plist; sourceTree = "<group>"; };
@@ -245,6 +251,8 @@
 				D9D123CE129F4C02003E40C5 /* BNConnection.m */,
 				D9D122A4129EE460003E40C5 /* BNServer.h */,
 				D9D122A5129EE460003E40C5 /* BNServer.m */,
+				D9040DF713BF70BB00568F07 /* BNNode.h */,
+				D9040DF813BF70BB00568F07 /* BNNode.m */,
 				D9D12255129EBB21003E40C5 /* BsonNetwork.h */,
 			);
 			path = src;
@@ -324,6 +332,7 @@
 				D9D122A8129EE460003E40C5 /* BNServer.h in Headers */,
 				D9D123D0129F4C02003E40C5 /* BNConnection.h in Headers */,
 				D981F13712C314B800AA5617 /* PortMapper.h in Headers */,
+				D9040DF913BF70BC00568F07 /* BNNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -474,6 +483,7 @@
 				D9D123D1129F4C02003E40C5 /* BNConnection.m in Sources */,
 				D9D12B7C12A27DE4003E40C5 /* BSONCodec.m in Sources */,
 				D981F13812C314B800AA5617 /* PortMapper.m in Sources */,
+				D9040DFA13BF70BC00568F07 /* BNNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +501,7 @@
 				D9040DEF13BF0EF500568F07 /* AsyncSocket.m in Sources */,
 				D9040DF013BF0EF500568F07 /* AsyncUdpSocket.m in Sources */,
 				D9040DF613BF173F00568F07 /* RandomObjects.m in Sources */,
+				D9040DFC13BF70BC00568F07 /* BNNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +519,7 @@
 				D9D12AEE12A26CAA003E40C5 /* test_connection.m in Sources */,
 				D9D12B7512A27B40003E40C5 /* BSONCodec.m in Sources */,
 				D981F13612C314B100AA5617 /* PortMapper.m in Sources */,
+				D9040DFB13BF70BC00568F07 /* BNNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

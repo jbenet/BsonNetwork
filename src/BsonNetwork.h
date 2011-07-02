@@ -7,6 +7,7 @@
 
 #import "BNConnection.h"
 #import "BNServer.h"
+#import "BNNode.h"
 
 #ifdef DEBUG
 #define BSONNETWORK_DEBUG
