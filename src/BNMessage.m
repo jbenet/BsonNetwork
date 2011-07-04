@@ -126,7 +126,7 @@ NSString * const BNMessageToken = @"_tok";
     nextSeqNo_ = 1;
     cumAckNo_ = 0;
 
-    resendTimeInterval = 0.030; // 30 milliseconds.
+    resendTimeInterval = 0.050; // 30 milliseconds.
   }
   return self;
 }
@@ -273,7 +273,8 @@ NSString * const BNMessageToken = @"_tok";
         sendStats_.absolute++;
         [sendTimes_ setValue:[NSDate date] forKey:key];
         msg.ackNo = ackNoToSend;
-        return msg;
+        [msg retain];
+        return [msg autorelease];
       }
     }
 

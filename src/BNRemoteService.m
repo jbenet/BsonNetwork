@@ -128,12 +128,18 @@ NSString * const BNRemoteServiceSentMessageNotification =
   if ((self = [super initWithName:_name andNode:_node])) {
 
     queue_ = [[BNMessageQueue alloc] init];
+    periodicTimer_ = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self
+      selector:@selector(__periodicTimer) userInfo:nil repeats:YES];
 
+    periodicTrickleTimeout_ = 0;
+    nextTrickleTimeout_ = 1;
   }
   return self;
 }
 
 - (void) dealloc {
+  [periodicTimer_ invalidate];
+
   [queue_ release];
   [super dealloc];
 }
@@ -150,12 +156,15 @@ NSString * const BNRemoteServiceSentMessageNotification =
   return YES;
 }
 
-
 - (void) __nodeReceivedMessageNotification:(NSNotification *)notification {
 
   BNMessage * message = [notification.userInfo valueForKey:@"message"];
   if (!message || !message.source || ![message.source isEqualToString:name])
     return; // not for us.
+
+  if (message.seqNo != 0) { // got some data.
+    nextTrickleTimeout_ = 1;
+  }
 
   [queue_ enqueueRecvMessage:message];
   message = [queue_ dequeueRecvMessage];
@@ -175,6 +184,19 @@ NSString * const BNRemoteServiceSentMessageNotification =
     userInfo:notification.userInfo]];
 }
 
+
+- (void) __periodicTimer {
+  periodicTrickleTimeout_--;
+  if (periodicTrickleTimeout_ > 0)
+    return;
+
+  BNMessage * message  = [queue_ dequeueSendMessage];
+  if (message)
+    [super sendMessage:message];
+
+  periodicTrickleTimeout_ = nextTrickleTimeout_;
+  nextTrickleTimeout_ *= 2;
+}
 
 @end
 

@@ -11,7 +11,8 @@
 #ifndef WAIT_WHILE
 #define WAIT_WHILE(condition) \
   for (int i = 0; (condition) && i < 10000; i++) \
-    [NSThread sleepForTimeInterval:0.5]; // main thread apparently.
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+    // [NSThread sleepForTimeInterval:0.5]; // main thread apparently.
 #endif
 
 @interface BNRemoteServiceTest : GHTestCase <BNRemoteServiceDelegate> {
@@ -562,6 +563,15 @@
   nodes = nil;
 }
 
+- (int) expectCount {
+  int count = 0;
+  @synchronized(expect) {
+    for (NSArray *arr in [expect allValues])
+      count += [arr count];
+  }
+  return count;
+}
+
 - (void) setUp {
   [NSThread sleepForTimeInterval:0.3];
 }
@@ -569,8 +579,7 @@
 - (void) tearDown {
   [NSThread sleepForTimeInterval:0.3];
 
-  for (NSArray *arr in [expect allValues])
-    GHAssertTrue([arr count] == 0, @"Must not be waiting for anything else.");
+  GHAssertTrue([self expectCount] == 0, @"Must not be waiting for anything.");
 }
 
 
@@ -615,7 +624,12 @@
 
 - (void) remoteService:(BNRemoteService *)serv receivedMessage:(BNMessage *)msg
 {
-  NSData *data = [msg.contents BSONRepresentation];
+  NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+  [dict addEntriesFromDictionary:msg.contents];
+  [dict setValue:nil forKey:BNMessageSeqNo];
+  [dict setValue:nil forKey:BNMessageAckNo];
+
+  NSData *data = [dict BSONRepresentation];
   GHAssertTrue([serv.name isEqualToString:msg.source], @"name matching");
   GHAssertTrue([self serviceNamed:serv.node.name consumeExpectedData:data],
     @"data received.");
@@ -697,6 +711,7 @@
   [self addExpectedData:data toServiceNamed:rs.name];
 
   GHAssertTrue([rs sendMessage:msg], @"sending ok");
+  WAIT_WHILE([self expectedCount]);
 }
 
 
@@ -714,6 +729,7 @@
   [self addExpectedData:data toServiceNamed:rs.name];
 
   GHAssertTrue([rs sendMessage:msg], @"sending ok");
+  WAIT_WHILE([self expectedCount]);
 }
 
 - (void) testBD_simpleSimultaneous {
@@ -742,6 +758,7 @@
 
   GHAssertTrue([rs1 sendMessage:msg1], @"sending ok");
   GHAssertTrue([rs2 sendMessage:msg2], @"sending ok");
+  WAIT_WHILE([self expectedCount]);
 }
 
 - (void) testBE_simpleMultiple {
