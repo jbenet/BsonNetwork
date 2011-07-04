@@ -59,6 +59,7 @@ static NSString *kHOST4 = @"localhost:1340";
 
   [[NSRunLoop currentRunLoop] run];
 
+  [conn release];
   [pool release];
 }
 

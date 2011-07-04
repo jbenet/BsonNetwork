@@ -8,10 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "BNServer.h"
 #import "BNConnection.h"
-
-
-
-
+#import "BNMessage.h"
 
 @class BNLink;
 @class BNMessage;
@@ -31,7 +28,8 @@ extern NSString * const BNNodeSentMessageNotification;
 
 
 
-@interface BNNode : NSObject <BNServerDelegate, BNConnectionDelegate> {
+@interface BNNode : NSObject
+  <BNServerDelegate, BNConnectionDelegate, BNMessageSender> {
   NSMutableDictionary * links_;
 
   NSString *name;
@@ -59,7 +57,7 @@ extern NSString * const BNNodeSentMessageNotification;
 
 
 
-@interface BNLink : NSObject {
+@interface BNLink : NSObject <BNMessageSender> {
   NSString * name;
   BNConnection * connection;
 }
@@ -76,37 +74,3 @@ extern NSString * const BNNodeSentMessageNotification;
 
 
 
-
-@interface BNMessage : NSObject {
-  NSMutableDictionary *contents;
-}
-
-@property (nonatomic, retain) NSString *source;
-@property (nonatomic, retain) NSString *destination;
-@property (readonly) NSMutableDictionary *contents;
-
-+ (BNMessage *) messageWithContents:(NSDictionary *)dictionary;
-
-@end
-
-
-@interface BNMessageNotification : NSNotification {
-  BNNode *node;
-  BNLink *link;
-  BNMessage *message;
-}
-
-@property (retain) BNNode *node;
-@property (retain) BNLink *link;
-@property (retain) BNMessage *message;
-
-+ (BNMessageNotification *) notificationWithName:(NSString *)name
-  node:(BNNode *)node link:(BNLink *)link message:(BNMessage *) message;
-
-+ (BNMessageNotification *) sentMessageNotificationWithNode:(BNNode *)node
-  link:(BNLink *)link message:(BNMessage *) message;
-
-+ (BNMessageNotification *) receivedMessageNotificationWithNode:(BNNode *)node
-  link:(BNLink *)link message:(BNMessage *) message;
-
-@end

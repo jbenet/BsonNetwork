@@ -59,6 +59,7 @@ static NSString *kHOST4 = @"localhost:1340";
 
   [[NSRunLoop currentRunLoop] run];
 
+  [server release];
   [pool release];
 }
 
@@ -300,7 +301,6 @@ static NSString *kHOST4 = @"localhost:1340";
   NSUInteger nextCount;
   NSString *address;
   for (BNServer *servA in [servers allValues]) {
-
     for (BNServer *servB in [servers allValues]) {
       // DO test connection to self :) :)
       nextCount = [connections count] + 2; // 2 conns per link.

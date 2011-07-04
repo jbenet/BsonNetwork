@@ -43,6 +43,20 @@
 		D9040DFA13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
 		D9040DFB13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
 		D9040DFC13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
+		D9040E2E13BF7D6E00568F07 /* test_node.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E2D13BF7D6E00568F07 /* test_node.m */; };
+		D9040E2F13BF7D7500568F07 /* test_node.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E2D13BF7D6E00568F07 /* test_node.m */; };
+		D9040E3213BFCEF800568F07 /* BNRemoteService.h in Headers */ = {isa = PBXBuildFile; fileRef = D9040E3013BFCEF700568F07 /* BNRemoteService.h */; };
+		D9040E3313BFCEF800568F07 /* BNRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3113BFCEF700568F07 /* BNRemoteService.m */; };
+		D9040E3413BFCEF800568F07 /* BNRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3113BFCEF700568F07 /* BNRemoteService.m */; };
+		D9040E3513BFCEF800568F07 /* BNRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3113BFCEF700568F07 /* BNRemoteService.m */; };
+		D9040E3713BFD04C00568F07 /* test_remoteservice.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3613BFD04C00568F07 /* test_remoteservice.m */; };
+		D9040E3813BFD04C00568F07 /* test_remoteservice.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3613BFD04C00568F07 /* test_remoteservice.m */; };
+		D9442A5613C1531F007ABFE3 /* BNMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D9442A5413C1531F007ABFE3 /* BNMessage.h */; };
+		D9442A5713C1531F007ABFE3 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5513C1531F007ABFE3 /* BNMessage.m */; };
+		D9442A5813C1531F007ABFE3 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5513C1531F007ABFE3 /* BNMessage.m */; };
+		D9442A5913C1531F007ABFE3 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5513C1531F007ABFE3 /* BNMessage.m */; };
+		D9442A5B13C16045007ABFE3 /* test_message.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5A13C16045007ABFE3 /* test_message.m */; };
+		D9442A5C13C16045007ABFE3 /* test_message.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5A13C16045007ABFE3 /* test_message.m */; };
 		D981F13612C314B100AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
 		D981F13712C314B800AA5617 /* PortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D981F13412C314B100AA5617 /* PortMapper.h */; };
 		D981F13812C314B800AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
@@ -116,6 +130,13 @@
 		D9040DE713BF0C3D00568F07 /* GHUnitTestMain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GHUnitTestMain.m; sourceTree = "<group>"; };
 		D9040DF713BF70BB00568F07 /* BNNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNNode.h; sourceTree = "<group>"; };
 		D9040DF813BF70BB00568F07 /* BNNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNNode.m; sourceTree = "<group>"; };
+		D9040E2D13BF7D6E00568F07 /* test_node.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_node.m; sourceTree = "<group>"; };
+		D9040E3013BFCEF700568F07 /* BNRemoteService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNRemoteService.h; sourceTree = "<group>"; };
+		D9040E3113BFCEF700568F07 /* BNRemoteService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNRemoteService.m; sourceTree = "<group>"; };
+		D9040E3613BFD04C00568F07 /* test_remoteservice.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_remoteservice.m; sourceTree = "<group>"; };
+		D9442A5413C1531F007ABFE3 /* BNMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNMessage.h; sourceTree = "<group>"; };
+		D9442A5513C1531F007ABFE3 /* BNMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNMessage.m; sourceTree = "<group>"; };
+		D9442A5A13C16045007ABFE3 /* test_message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_message.m; sourceTree = "<group>"; };
 		D981F13412C314B100AA5617 /* PortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortMapper.h; sourceTree = "<group>"; };
 		D981F13512C314B100AA5617 /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
 		D9D1219B129EB294003E40C5 /* Framework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Framework.plist; sourceTree = "<group>"; };
@@ -251,8 +272,12 @@
 				D9D123CE129F4C02003E40C5 /* BNConnection.m */,
 				D9D122A4129EE460003E40C5 /* BNServer.h */,
 				D9D122A5129EE460003E40C5 /* BNServer.m */,
+				D9442A5413C1531F007ABFE3 /* BNMessage.h */,
+				D9442A5513C1531F007ABFE3 /* BNMessage.m */,
 				D9040DF713BF70BB00568F07 /* BNNode.h */,
 				D9040DF813BF70BB00568F07 /* BNNode.m */,
+				D9040E3013BFCEF700568F07 /* BNRemoteService.h */,
+				D9040E3113BFCEF700568F07 /* BNRemoteService.m */,
 				D9D12255129EBB21003E40C5 /* BsonNetwork.h */,
 			);
 			path = src;
@@ -261,10 +286,13 @@
 		D9D1219E129EB294003E40C5 /* test */ = {
 			isa = PBXGroup;
 			children = (
+				D9040E2D13BF7D6E00568F07 /* test_node.m */,
 				D9D127F4129FC058003E40C5 /* RandomObjects.h */,
 				D9D127F5129FC058003E40C5 /* RandomObjects.m */,
 				D9D125A5129F85EE003E40C5 /* hamlet.txt */,
 				D9D122F2129F372B003E40C5 /* test_connection.m */,
+				D9040E3613BFD04C00568F07 /* test_remoteservice.m */,
+				D9442A5A13C16045007ABFE3 /* test_message.m */,
 				D9D129E212A24070003E40C5 /* test_server.m */,
 			);
 			path = test;
@@ -333,6 +361,8 @@
 				D9D123D0129F4C02003E40C5 /* BNConnection.h in Headers */,
 				D981F13712C314B800AA5617 /* PortMapper.h in Headers */,
 				D9040DF913BF70BC00568F07 /* BNNode.h in Headers */,
+				D9040E3213BFCEF800568F07 /* BNRemoteService.h in Headers */,
+				D9442A5613C1531F007ABFE3 /* BNMessage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +514,8 @@
 				D9D12B7C12A27DE4003E40C5 /* BSONCodec.m in Sources */,
 				D981F13812C314B800AA5617 /* PortMapper.m in Sources */,
 				D9040DFA13BF70BC00568F07 /* BNNode.m in Sources */,
+				D9040E3313BFCEF800568F07 /* BNRemoteService.m in Sources */,
+				D9442A5713C1531F007ABFE3 /* BNMessage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,6 +534,11 @@
 				D9040DF013BF0EF500568F07 /* AsyncUdpSocket.m in Sources */,
 				D9040DF613BF173F00568F07 /* RandomObjects.m in Sources */,
 				D9040DFC13BF70BC00568F07 /* BNNode.m in Sources */,
+				D9040E2F13BF7D7500568F07 /* test_node.m in Sources */,
+				D9040E3513BFCEF800568F07 /* BNRemoteService.m in Sources */,
+				D9040E3813BFD04C00568F07 /* test_remoteservice.m in Sources */,
+				D9442A5913C1531F007ABFE3 /* BNMessage.m in Sources */,
+				D9442A5C13C16045007ABFE3 /* test_message.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -520,6 +557,11 @@
 				D9D12B7512A27B40003E40C5 /* BSONCodec.m in Sources */,
 				D981F13612C314B100AA5617 /* PortMapper.m in Sources */,
 				D9040DFB13BF70BC00568F07 /* BNNode.m in Sources */,
+				D9040E2E13BF7D6E00568F07 /* test_node.m in Sources */,
+				D9040E3413BFCEF800568F07 /* BNRemoteService.m in Sources */,
+				D9040E3713BFD04C00568F07 /* test_remoteservice.m in Sources */,
+				D9442A5813C1531F007ABFE3 /* BNMessage.m in Sources */,
+				D9442A5B13C16045007ABFE3 /* test_message.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,7 +729,7 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Tests_Prefix.pch;
+				GCC_PREFIX_HEADER = resources/Tests_Prefix.pch;
 				GCC_SYMBOLS_PRIVATE_EXTERN = YES;
 				HEADER_SEARCH_PATHS = (
 					src,
@@ -695,7 +737,7 @@
 					lib/cas,
 					lib/,
 				);
-				INFOPLIST_FILE = "Tests-Info.plist";
+				INFOPLIST_FILE = "resources/Tests-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				IPHONEOS_DEPLOYMENT_TARGET = 3.1;
 				OTHER_LDFLAGS = (
@@ -725,8 +767,8 @@
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = Tests_Prefix.pch;
-				INFOPLIST_FILE = "Tests-Info.plist";
+				GCC_PREFIX_HEADER = resources/Tests_Prefix.pch;
+				INFOPLIST_FILE = "resources/Tests-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -790,6 +832,7 @@
 				D9040DD613BF08F200568F07 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D9D1221F129EB8FC003E40C5 /* Build configuration list for PBXNativeTarget "Tests" */ = {
 			isa = XCConfigurationList;

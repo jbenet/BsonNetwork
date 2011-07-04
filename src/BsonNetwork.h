@@ -8,6 +8,8 @@
 #import "BNConnection.h"
 #import "BNServer.h"
 #import "BNNode.h"
+#import "BNRemoteService.h"
+#import "BNMessage.h"
 
 #ifdef DEBUG
 #define BSONNETWORK_DEBUG

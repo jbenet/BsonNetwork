@@ -22,8 +22,6 @@ NSString * const BNNodeSentMessageNotification =
 
 
 
-NSString * const BNMessageSource = @"_src";
-NSString * const BNMessageDestination = @"_dst";
 
 
 
@@ -47,6 +45,7 @@ NSString * const BNMessageDestination = @"_dst";
 
     name = [_name copy];
     server = [[BNServer alloc] initWithThread:thread];
+    server.delegate = self;
 
     links_ = [[NSMutableDictionary alloc] initWithCapacity:10];
     defaultLink = nil;
@@ -59,6 +58,7 @@ NSString * const BNMessageDestination = @"_dst";
   [self disconnectLinks];
   [links_ release];
 
+  [server stopListening];
   [server release];
 
   [name release];
@@ -68,8 +68,12 @@ NSString * const BNMessageDestination = @"_dst";
 
 //------------------------------------------------------------------------------
 
+- (NSString *) description {
+  return [NSString stringWithFormat:@"<Node %@>", name];
+}
+
 - (BNLink *) linkForConnection:(BNConnection *)connection {
-  for (BNLink * link in links_) {
+  for (BNLink * link in [links_ allValues]) {
     if (link.connection == connection)
       return link;
   }
@@ -101,8 +105,10 @@ NSString * const BNMessageDestination = @"_dst";
   if (![link sendMessage:message])
     return NO;
 
-  [[NSNotificationCenter defaultCenter] postNotification:[BNMessageNotification
-    sentMessageNotificationWithNode:self link:link message:message]];
+  [[NSNotificationCenter defaultCenter] postNotification:[NSNotification
+    notificationWithName:BNNodeSentMessageNotification object:self
+    userInfo:[NSDictionary dictionaryWithObjectsAndKeys:link, @"link",
+    message, @"message", nil]]];
 
   return YES;
 }
@@ -145,15 +151,19 @@ NSString * const BNMessageDestination = @"_dst";
 
   BNLink * link;
   NSNotificationCenter *nc;
+  NSDictionary *userInfo = nil;
 
   switch (conn.state) {
     case BNConnectionConnected: break; // won't get.
     case BNConnectionDisconnected:
 
       link = [self linkForConnection:conn];
+      if (link)
+        userInfo = [NSDictionary dictionaryWithObject:link forKey:@"link"];
+
       nc = [NSNotificationCenter defaultCenter];
       [nc postNotificationName:BNNodeDisconnectedLinkNotification object:self
-        userInfo:[NSDictionary dictionaryWithObject:link forKey:@"link"]];
+        userInfo:userInfo];
 
       [links_ setValue:nil forKey:link.name];
       break;
@@ -185,11 +195,7 @@ NSString * const BNMessageDestination = @"_dst";
     // DROP!
   }
   else if (destination == nil) {
-    // Identified Link!
-    if (link) { // old link?
-      [nc postNotificationName:BNNodeDisconnectedLinkNotification object:self
-        userInfo:[NSDictionary dictionaryWithObject:link forKey:@"link"]];
-    }
+    // Identified Link! (or re-identified.)
 
     link = [[BNLink alloc] initWithName:source andConnection:conn];
     [links_ setValue:link forKey:source];
@@ -212,8 +218,10 @@ NSString * const BNMessageDestination = @"_dst";
   else {
     // Got a message and have a link for it. notify!
     BNMessage *message = [BNMessage messageWithContents:dict];
-    [nc postNotification:[BNMessageNotification
-      receivedMessageNotificationWithNode:self link:link message:message]];
+    [nc postNotification:[NSNotification
+      notificationWithName:BNNodeReceivedMessageNotification object:self
+      userInfo: [NSDictionary dictionaryWithObjectsAndKeys:link, @"link",
+      message, @"message", nil]]];
 
   }
 }
@@ -259,84 +267,6 @@ NSString * const BNMessageDestination = @"_dst";
 
   [connection sendDictionary:message.contents];
   return YES;
-}
-
-@end
-
-//------------------------------------------------------------------------------
-#pragma mark -
-#pragma mark BNMessage
-
-@implementation BNMessage
-
-@synthesize contents;
-
-- (id) init {
-  if ((self = [super init])) {
-    contents = [[NSMutableDictionary alloc] init];
-  }
-  return self;
-}
-
-- (void) dealloc {
-  [contents release];
-  [super dealloc];
-}
-
-- (NSString *) source {
-  return [contents valueForKey:BNMessageSource];
-}
-
-- (void) setSource:(NSString *)source {
-  [contents setValue:source forKey:BNMessageSource];
-}
-
-
-- (NSString *) destination {
-  return [contents valueForKey:BNMessageDestination];
-}
-
-- (void) setDestination:(NSString *)destination {
-  [contents setValue:destination forKey:BNMessageDestination];
-}
-
-+ (BNMessage *) messageWithContents:(NSDictionary *)dictionary {
-  BNMessage *msg = [[BNMessage alloc] init];
-  [msg.contents addEntriesFromDictionary:dictionary];
-  return [msg autorelease];
-}
-
-@end
-
-//------------------------------------------------------------------------------
-#pragma mark -
-#pragma mark BNMessageNotification
-
-@implementation BNMessageNotification
-
-@synthesize node, link, message;
-
-+ (BNMessageNotification *) notificationWithName:(NSString *)name
-  node:(BNNode *)node link:(BNLink *)link message:(BNMessage *) message
-{
-  BNMessageNotification *notification =
-    [BNMessageNotification notificationWithName:name object:node];
-  notification.node = node;
-  notification.link = link;
-  notification.message = message;
-  return notification;
-}
-
-+ (BNMessageNotification *) sentMessageNotificationWithNode:(BNNode *)node
-  link:(BNLink *)link message:(BNMessage *) message {
-  return [self notificationWithName:BNNodeSentMessageNotification
-    node:node link:link message:message];
-}
-
-+ (BNMessageNotification *) receivedMessageNotificationWithNode:(BNNode *)node
-  link:(BNLink *)link message:(BNMessage *) message {
-  return [self notificationWithName:BNNodeReceivedMessageNotification
-    node:node link:link message:message];
 }
 
 @end
