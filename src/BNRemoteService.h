@@ -57,4 +57,6 @@ extern NSString * const BNRemoteServiceSentMessageNotification;
   int nextTrickleTimeout_;
 }
 
+- (void) invalidateTimer;
+
 @end

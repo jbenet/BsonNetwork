@@ -120,6 +120,38 @@ NSString * const BNRemoteServiceSentMessageNotification =
 #pragma mark -
 
 
+// @interface BNTimerExecution : NSObject {
+//   NSObject *target;
+//   SEL selector;
+// }
+// @property (nonatomic, assign) NSObject *target;
+// @property (nonatomic, assign) SEL selector;
+// - (void) execute:(NSTimer *)timer;
+// + (BNTimerExecution *) executionWithTarget:(NSObject *)target selector:(SEL)sel;
+// @end
+//
+// @implementation BNTimerExecution
+//
+// @synthesize target, selector;
+//
+// - (void) execute:(NSTimer *)timer {
+//   NSLog(@"%@ FIRED", timer);
+//   @synchronized(timer) {
+//     [target performSelector:selector onThread:[NSThread currentThread]
+//       withObject:nil waitUntilDone:YES];
+//   }
+// }
+//
+// + (BNTimerExecution *) executionWithTarget:(NSObject *)target selector:(SEL)sel
+// {
+//   BNTimerExecution *exec = [[BNTimerExecution alloc] init];
+//   exec.target = target;
+//   exec.selector = sel;
+//   return [exec autorelease];
+// }
+// @end
+
+
 @implementation BNReliableRemoteService
 
 #pragma mark Init/Dealloc
@@ -128,8 +160,15 @@ NSString * const BNRemoteServiceSentMessageNotification =
   if ((self = [super initWithName:_name andNode:_node])) {
 
     queue_ = [[BNMessageQueue alloc] init];
+
+//    BNTimerExecution *exec = [[BNTimerExecution alloc] init];
+//    exec.target = self;
+//    exec.selector = @selector(__periodicTimer);
+
     periodicTimer_ = [NSTimer scheduledTimerWithTimeInterval:0.5f target:self
       selector:@selector(__periodicTimer) userInfo:nil repeats:YES];
+
+//    [exec release];
 
     periodicTrickleTimeout_ = 0;
     nextTrickleTimeout_ = 1;
@@ -137,8 +176,15 @@ NSString * const BNRemoteServiceSentMessageNotification =
   return self;
 }
 
+- (void) invalidateTimer {
+  @synchronized(periodicTimer_) {
+    [periodicTimer_ invalidate];
+    periodicTimer_ = nil;
+  }
+}
+
 - (void) dealloc {
-  [periodicTimer_ invalidate];
+  [self invalidateTimer];
 
   [queue_ release];
   [super dealloc];
@@ -186,6 +232,7 @@ NSString * const BNRemoteServiceSentMessageNotification =
 
 
 - (void) __periodicTimer {
+
   periodicTrickleTimeout_--;
   if (periodicTrickleTimeout_ > 0)
     return;
@@ -196,6 +243,14 @@ NSString * const BNRemoteServiceSentMessageNotification =
 
   periodicTrickleTimeout_ = nextTrickleTimeout_;
   nextTrickleTimeout_ *= 2;
+}
+
+- (id) retain {
+  return [super retain];
+}
+
+- (void) release {
+  [super release];
 }
 
 @end

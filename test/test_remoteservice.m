@@ -40,7 +40,7 @@
 
   int num = [number intValue];
   NSString *name = [NSString stringWithFormat:@"client%d", num];
-  UInt16 port = 1350 + num;
+  UInt16 port = 1360 + num;
 
   BNNode *node = [[BNNode alloc] initWithName:name];
   @synchronized(nodes) {
@@ -206,9 +206,10 @@
 
   BNNode *node1 = [nodes valueForKey:@"client1"];
   BNNode *node2 = [nodes valueForKey:@"client2"];
-  [node1.server connectToAddress:@"localhost:1352"];
+  [node1.server connectToAddress:@"localhost:1362"];
 
   WAIT_WHILE(![node1 linkForName:node2.name]);
+  WAIT_WHILE(![node2 linkForName:node1.name]);
 
   BNLink *l1 = [node1 linkForName:node2.name];
   BNLink *l2 = [node2 linkForName:node1.name];
@@ -242,6 +243,9 @@
   [self addExpectedData:data toServiceNamed:rs.name];
 
   GHAssertTrue([rs sendMessage:msg], @"sending ok");
+
+  [self waitForAllExpected];
+
 }
 
 
@@ -259,6 +263,8 @@
   [self addExpectedData:data toServiceNamed:rs.name];
 
   GHAssertTrue([rs sendMessage:msg], @"sending ok");
+
+  [self waitForAllExpected];
 }
 
 - (void) testBD_simpleSimultaneous {
@@ -287,6 +293,8 @@
 
   GHAssertTrue([rs1 sendMessage:msg1], @"sending ok");
   GHAssertTrue([rs2 sendMessage:msg2], @"sending ok");
+
+  [self waitForAllExpected];
 }
 
 - (void) testBE_simpleMultiple {
@@ -554,6 +562,9 @@
 
 
 - (void) tearDownClass {
+  for (BNReliableRemoteService *rs in services)
+    [rs invalidateTimer];
+
   [services release];
   [expect release];
   [nodes release];
@@ -711,7 +722,7 @@
   [self addExpectedData:data toServiceNamed:rs.name];
 
   GHAssertTrue([rs sendMessage:msg], @"sending ok");
-  WAIT_WHILE([self expectedCount]);
+  [self waitForAllExpected];
 }
 
 
@@ -729,7 +740,7 @@
   [self addExpectedData:data toServiceNamed:rs.name];
 
   GHAssertTrue([rs sendMessage:msg], @"sending ok");
-  WAIT_WHILE([self expectedCount]);
+  [self waitForAllExpected];
 }
 
 - (void) testBD_simpleSimultaneous {
@@ -758,7 +769,7 @@
 
   GHAssertTrue([rs1 sendMessage:msg1], @"sending ok");
   GHAssertTrue([rs2 sendMessage:msg2], @"sending ok");
-  WAIT_WHILE([self expectedCount]);
+  [self waitForAllExpected];
 }
 
 - (void) testBE_simpleMultiple {
