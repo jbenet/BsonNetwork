@@ -4,4 +4,6 @@ build/
 *.pbxuser
 .DS_STORE/
 .DS_Store
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/
 
