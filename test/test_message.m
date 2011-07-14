@@ -7,7 +7,7 @@
 
 #import "BNMessage.h"
 #import "RandomObjects.h"
-#import "BSONCodec.h"
+#import <bson-objc/BSONCodec.h>
 
 #define kARC4RANDOM_MAX      (0x100000000)
 #define kARC4RANDOM_FLOAT    (arc4random() * 1.0 / kARC4RANDOM_MAX)

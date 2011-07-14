@@ -7,9 +7,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AsyncSocket.h"
-
-#import "BSONCodec.h"
-// #import "NuBSON.h"
+#import <bson-objc/BSONCodec.h>
 
 typedef enum {
   BNConnectionDisconnected = 0,

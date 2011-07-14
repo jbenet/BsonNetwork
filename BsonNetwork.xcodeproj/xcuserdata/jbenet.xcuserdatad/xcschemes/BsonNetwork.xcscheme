@@ -13,8 +13,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D2AAC07D0554694100DB518D"
-               BuildableName = "libBsonNetwork.a"
+               BlueprintIdentifier = "D9DB6AEB13C73D3200C87760"
+               BuildableName = "BsonNetwork.framework"
                BlueprintName = "BsonNetwork"
                ReferencedContainer = "container:BsonNetwork.xcodeproj">
             </BuildableReference>
@@ -36,7 +36,7 @@
       displayScale = "1.00"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug">
+      buildConfiguration = "Release">
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>

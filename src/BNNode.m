@@ -93,6 +93,24 @@ NSString * const BNNodeSentMessageNotification =
   }
 }
 
+//------------------------------------------------------------------------------
+
+- (void) setName:(NSString *)_name {
+  NSString *temp = [_name copy];
+  [name release];
+  name = temp;
+
+
+  for (BNLink *link in [links_ allValues]) {
+    BNMessage *message = [[BNMessage alloc] init];
+    message.source = name;
+    [link sendMessage:message];
+    [message release];
+  }
+}
+
+//------------------------------------------------------------------------------
+
 
 - (BOOL) sendMessage:(BNMessage *)message {
   BNLink *link = [links_ valueForKey:message.destination];
@@ -166,6 +184,8 @@ NSString * const BNNodeSentMessageNotification =
         userInfo:userInfo];
 
       [links_ setValue:nil forKey:link.name];
+      if (defaultLink == link)
+        defaultLink = nil;
       break;
 
     case BNConnectionConnecting: break; // don't care...
@@ -194,8 +214,8 @@ NSString * const BNNodeSentMessageNotification =
     DebugLog(@"[%@] malformed message", self);
     // DROP!
   }
-  else if (destination == nil) {
-    // Identified Link! (or re-identified.)
+  else if (destination == nil && !link) {
+    // Identified Link!
 
     link = [[BNLink alloc] initWithName:source andConnection:conn];
     [links_ setValue:link forKey:source];
@@ -203,12 +223,28 @@ NSString * const BNNodeSentMessageNotification =
     if (defaultLink == nil)
       defaultLink = link;
 
-    DebugLog(@"[%@] identified link: %@", self, link);
+    DebugLog(@"[%@] connected link: %@", self, link);
     [nc postNotificationName:BNNodeConnectedLinkNotification object:self
+      userInfo:[NSDictionary dictionaryWithObject:link forKey:@"link"]];
+
+    DebugLog(@"[%@] identified link: %@", self, link);
+    [nc postNotificationName:BNNodeIdentifiedLinkNotification object:self
       userInfo:[NSDictionary dictionaryWithObject:link forKey:@"link"]];
 
 
     [link release];
+  }
+  else if (destination == nil && link) {
+    // Re-identified link!
+
+    [links_ setValue:link forKey:source]; // this one first (memory)
+    [links_ setValue:nil forKey:link.name];
+    link.name = source;
+
+    DebugLog(@"[%@] identified link: %@", self, link);
+    [nc postNotificationName:BNNodeIdentifiedLinkNotification object:self
+      userInfo:[NSDictionary dictionaryWithObject:link forKey:@"link"]];
+
   }
   else if (link == nil) {
     // Message with a destination from an unidentified link.

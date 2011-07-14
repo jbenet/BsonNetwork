@@ -6,24 +6,7 @@
 	objectVersion = 45;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		D9D12239129EBA0E003E40C5 /* Build framework */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = D9D12245129EBA27003E40C5 /* Build configuration list for PBXAggregateTarget "Build framework" */;
-			buildPhases = (
-				D9D1223F129EBA1D003E40C5 /* ShellScript */,
-			);
-			dependencies = (
-				D9D1223D129EBA15003E40C5 /* PBXTargetDependency */,
-			);
-			name = "Build framework";
-			productName = "Build framework";
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
-		AA747D9F0F9514B9006C5449 /* BsonNetwork_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */; };
-		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		D9040DC813BF08F200568F07 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D9040DC613BF08F200568F07 /* InfoPlist.strings */; };
 		D9040DE213BF0B0000568F07 /* GHUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9040DE113BF0B0000568F07 /* GHUnit.framework */; };
 		D9040DE413BF0B3400568F07 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9040DE313BF0B2400568F07 /* Cocoa.framework */; };
@@ -38,63 +21,55 @@
 		D9040DF113BF0EFF00568F07 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		D9040DF513BF137000568F07 /* GHUnit.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = D9040DE113BF0B0000568F07 /* GHUnit.framework */; };
 		D9040DF613BF173F00568F07 /* RandomObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D127F5129FC058003E40C5 /* RandomObjects.m */; };
-		D9040DF913BF70BC00568F07 /* BNNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D9040DF713BF70BB00568F07 /* BNNode.h */; };
-		D9040DFA13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
 		D9040DFB13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
 		D9040DFC13BF70BC00568F07 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
 		D9040E2E13BF7D6E00568F07 /* test_node.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E2D13BF7D6E00568F07 /* test_node.m */; };
 		D9040E2F13BF7D7500568F07 /* test_node.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E2D13BF7D6E00568F07 /* test_node.m */; };
-		D9040E3213BFCEF800568F07 /* BNRemoteService.h in Headers */ = {isa = PBXBuildFile; fileRef = D9040E3013BFCEF700568F07 /* BNRemoteService.h */; };
-		D9040E3313BFCEF800568F07 /* BNRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3113BFCEF700568F07 /* BNRemoteService.m */; };
 		D9040E3413BFCEF800568F07 /* BNRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3113BFCEF700568F07 /* BNRemoteService.m */; };
 		D9040E3513BFCEF800568F07 /* BNRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3113BFCEF700568F07 /* BNRemoteService.m */; };
 		D9040E3713BFD04C00568F07 /* test_remoteservice.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3613BFD04C00568F07 /* test_remoteservice.m */; };
 		D9040E3813BFD04C00568F07 /* test_remoteservice.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3613BFD04C00568F07 /* test_remoteservice.m */; };
-		D9442A5613C1531F007ABFE3 /* BNMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D9442A5413C1531F007ABFE3 /* BNMessage.h */; };
-		D9442A5713C1531F007ABFE3 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5513C1531F007ABFE3 /* BNMessage.m */; };
 		D9442A5813C1531F007ABFE3 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5513C1531F007ABFE3 /* BNMessage.m */; };
 		D9442A5913C1531F007ABFE3 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5513C1531F007ABFE3 /* BNMessage.m */; };
 		D9442A5B13C16045007ABFE3 /* test_message.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5A13C16045007ABFE3 /* test_message.m */; };
 		D9442A5C13C16045007ABFE3 /* test_message.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5A13C16045007ABFE3 /* test_message.m */; };
+		D97AB6FF13C7537F006A65D3 /* bson-objc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97AB6FE13C7537E006A65D3 /* bson-objc.framework */; };
+		D97AB70013C7537F006A65D3 /* bson-objc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97AB6FE13C7537E006A65D3 /* bson-objc.framework */; };
+		D97AB70113C7537F006A65D3 /* bson-objc.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D97AB6FE13C7537E006A65D3 /* bson-objc.framework */; };
 		D981F13612C314B100AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
-		D981F13712C314B800AA5617 /* PortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D981F13412C314B100AA5617 /* PortMapper.h */; };
-		D981F13812C314B800AA5617 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
 		D9D12229129EB959003E40C5 /* GHUnitIOSTestMain.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12228129EB959003E40C5 /* GHUnitIOSTestMain.m */; };
 		D9D1222A129EB968003E40C5 /* GHUnitIOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */; };
-		D9D12257129EBB21003E40C5 /* BsonNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D12255129EBB21003E40C5 /* BsonNetwork.h */; };
-		D9D12266129EC446003E40C5 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D1225D129EC446003E40C5 /* AsyncSocket.h */; };
-		D9D12267129EC446003E40C5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D1225E129EC446003E40C5 /* AsyncSocket.m */; };
-		D9D12268129EC446003E40C5 /* AsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D1225F129EC446003E40C5 /* AsyncUdpSocket.h */; };
-		D9D12269129EC446003E40C5 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12260129EC446003E40C5 /* AsyncUdpSocket.m */; };
 		D9D1226E129EC446003E40C5 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D1225E129EC446003E40C5 /* AsyncSocket.m */; };
 		D9D1226F129EC446003E40C5 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12260129EC446003E40C5 /* AsyncUdpSocket.m */; };
-		D9D122A8129EE460003E40C5 /* BNServer.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D122A4129EE460003E40C5 /* BNServer.h */; };
-		D9D122A9129EE460003E40C5 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
 		D9D122AB129EE460003E40C5 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
 		D9D1231F129F3C1D003E40C5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D1231E129F3C1D003E40C5 /* UIKit.framework */; };
 		D9D1234D129F3D1E003E40C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 		D9D12352129F3DA5003E40C5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D12351129F3DA5003E40C5 /* CFNetwork.framework */; };
-		D9D12362129F3DAA003E40C5 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D12351129F3DA5003E40C5 /* CFNetwork.framework */; };
 		D9D12367129F3DC7003E40C5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D9D12366129F3DC7003E40C5 /* CoreGraphics.framework */; };
 		D9D123CF129F4C02003E40C5 /* BNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D123CE129F4C02003E40C5 /* BNConnection.m */; };
-		D9D123D0129F4C02003E40C5 /* BNConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D123CD129F4C02003E40C5 /* BNConnection.h */; };
-		D9D123D1129F4C02003E40C5 /* BNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D123CE129F4C02003E40C5 /* BNConnection.m */; };
 		D9D125A6129F85EE003E40C5 /* hamlet.txt in Resources */ = {isa = PBXBuildFile; fileRef = D9D125A5129F85EE003E40C5 /* hamlet.txt */; };
 		D9D127F6129FC058003E40C5 /* RandomObjects.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D127F5129FC058003E40C5 /* RandomObjects.m */; };
 		D9D129E312A24070003E40C5 /* test_server.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D129E212A24070003E40C5 /* test_server.m */; };
 		D9D12AEE12A26CAA003E40C5 /* test_connection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122F2129F372B003E40C5 /* test_connection.m */; };
 		D9D12C0512A288F2003E40C5 /* tests_icon.png in Resources */ = {isa = PBXBuildFile; fileRef = D9D12C0412A288F2003E40C5 /* tests_icon.png */; };
+		D9DB6AF713C73DE600C87760 /* BNConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D123CD129F4C02003E40C5 /* BNConnection.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6AF813C73DE600C87760 /* BNConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D123CE129F4C02003E40C5 /* BNConnection.m */; };
+		D9DB6AF913C73DE600C87760 /* BNServer.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D122A4129EE460003E40C5 /* BNServer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6AFA13C73DE600C87760 /* BNServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D122A5129EE460003E40C5 /* BNServer.m */; };
+		D9DB6AFB13C73DE600C87760 /* BNMessage.h in Headers */ = {isa = PBXBuildFile; fileRef = D9442A5413C1531F007ABFE3 /* BNMessage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6AFC13C73DE600C87760 /* BNMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = D9442A5513C1531F007ABFE3 /* BNMessage.m */; };
+		D9DB6AFD13C73DE600C87760 /* BNNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D9040DF713BF70BB00568F07 /* BNNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6AFE13C73DE600C87760 /* BNNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040DF813BF70BB00568F07 /* BNNode.m */; };
+		D9DB6AFF13C73DE600C87760 /* BNRemoteService.h in Headers */ = {isa = PBXBuildFile; fileRef = D9040E3013BFCEF700568F07 /* BNRemoteService.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6B0013C73DE600C87760 /* BNRemoteService.m in Sources */ = {isa = PBXBuildFile; fileRef = D9040E3113BFCEF700568F07 /* BNRemoteService.m */; };
+		D9DB6B0113C73DE600C87760 /* BsonNetwork.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D12255129EBB21003E40C5 /* BsonNetwork.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6B0613C73E8600C87760 /* AsyncSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D1225D129EC446003E40C5 /* AsyncSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6B0713C73E8600C87760 /* AsyncSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D1225E129EC446003E40C5 /* AsyncSocket.m */; };
+		D9DB6B0813C73E8600C87760 /* AsyncUdpSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = D9D1225F129EC446003E40C5 /* AsyncUdpSocket.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6B0913C73E8600C87760 /* AsyncUdpSocket.m in Sources */ = {isa = PBXBuildFile; fileRef = D9D12260129EC446003E40C5 /* AsyncUdpSocket.m */; };
+		D9DB6B0A13C73E8B00C87760 /* PortMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = D981F13412C314B100AA5617 /* PortMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D9DB6B0B13C73E8B00C87760 /* PortMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = D981F13512C314B100AA5617 /* PortMapper.m */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		D9D1223C129EBA15003E40C5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = D2AAC07D0554694100DB518D;
-			remoteInfo = BsonNetwork;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		D9040DE513BF0BBF00568F07 /* Copy Files */ = {
@@ -113,7 +88,6 @@
 /* Begin PBXFileReference section */
 		AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BsonNetwork_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		D2AAC07E0554694100DB518D /* libBsonNetwork.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBsonNetwork.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9040DBA13BF08F200568F07 /* MacTests.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MacTests.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9040DC713BF08F200568F07 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D9040DDB13BF09C300568F07 /* MacTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MacTests-Info.plist"; sourceTree = "<group>"; };
@@ -132,8 +106,12 @@
 		D9442A5413C1531F007ABFE3 /* BNMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BNMessage.h; sourceTree = "<group>"; };
 		D9442A5513C1531F007ABFE3 /* BNMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BNMessage.m; sourceTree = "<group>"; };
 		D9442A5A13C16045007ABFE3 /* test_message.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = test_message.m; sourceTree = "<group>"; };
+		D97AB6FE13C7537E006A65D3 /* bson-objc.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = "bson-objc.framework"; path = "lib/bson-objc.framework"; sourceTree = "<group>"; };
+		D97AB74A13C75796006A65D3 /* BsonNetwork-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "BsonNetwork-Info.plist"; sourceTree = "<group>"; };
+		D97AB74B13C758B1006A65D3 /* BsonNetwork.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = BsonNetwork.tar.gz; path = release/BsonNetwork.tar.gz; sourceTree = "<group>"; };
 		D981F13412C314B100AA5617 /* PortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortMapper.h; sourceTree = "<group>"; };
 		D981F13512C314B100AA5617 /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
+		D9BF42EE13CC35B600ACB204 /* BsonNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BsonNetwork.framework; path = "../Release-framework/BsonNetwork.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9D1219B129EB294003E40C5 /* Framework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Framework.plist; sourceTree = "<group>"; };
 		D9D1219C129EB294003E40C5 /* framework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = framework.sh; sourceTree = "<group>"; };
 		D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = lib/GHUnitIOS.framework; sourceTree = "<group>"; };
@@ -161,21 +139,11 @@
 		D9D12B5A12A27B40003E40C5 /* NuBSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NuBSON.h; sourceTree = "<group>"; };
 		D9D12B5B12A27B40003E40C5 /* NuBSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NuBSON.m; sourceTree = "<group>"; };
 		D9D12B5C12A27B40003E40C5 /* platform_hacks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = platform_hacks.h; sourceTree = "<group>"; };
-		D9D12BA712A282D3003E40C5 /* BsonNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BsonNetwork.framework; path = build/Framework/BsonNetwork.framework; sourceTree = "<group>"; };
-		D9D12BAA12A282EB003E40C5 /* BsonNetwork.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = BsonNetwork.tar.gz; path = build/Framework/BsonNetwork.tar.gz; sourceTree = "<group>"; };
 		D9D12C0412A288F2003E40C5 /* tests_icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tests_icon.png; sourceTree = "<group>"; };
+		D9DB6AEC13C73D3200C87760 /* BsonNetwork.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BsonNetwork.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		D2AAC07C0554694100DB518D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
-				D9D12362129F3DAA003E40C5 /* CFNetwork.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D9040DB713BF08F100568F07 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -183,6 +151,15 @@
 				D9040DE213BF0B0000568F07 /* GHUnit.framework in Frameworks */,
 				D9040DE413BF0B3400568F07 /* Cocoa.framework in Frameworks */,
 				D9040DF113BF0EFF00568F07 /* Foundation.framework in Frameworks */,
+				D97AB70013C7537F006A65D3 /* bson-objc.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D97AB65713C7438D006A65D3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D97AB70113C7537F006A65D3 /* bson-objc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,6 +172,7 @@
 				D9D1234D129F3D1E003E40C5 /* Foundation.framework in Frameworks */,
 				D9D12352129F3DA5003E40C5 /* CFNetwork.framework in Frameworks */,
 				D9D12367129F3DC7003E40C5 /* CoreGraphics.framework in Frameworks */,
+				D97AB6FF13C7537F006A65D3 /* bson-objc.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,11 +182,11 @@
 		034768DFFF38A50411DB9C8B /* products */ = {
 			isa = PBXGroup;
 			children = (
-				D9D12BAA12A282EB003E40C5 /* BsonNetwork.tar.gz */,
-				D9D12BA712A282D3003E40C5 /* BsonNetwork.framework */,
-				D2AAC07E0554694100DB518D /* libBsonNetwork.a */,
 				D9D1221A129EB8FB003E40C5 /* Tests.app */,
 				D9040DBA13BF08F200568F07 /* MacTests.app */,
+				D9DB6AEC13C73D3200C87760 /* BsonNetwork.framework */,
+				D9BF42EE13CC35B600ACB204 /* BsonNetwork.framework */,
+				D97AB74B13C758B1006A65D3 /* BsonNetwork.tar.gz */,
 			);
 			name = products;
 			sourceTree = "<group>";
@@ -229,6 +207,7 @@
 		0867D69AFE84028FC02AAC07 /* frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				D97AB6FE13C7537E006A65D3 /* bson-objc.framework */,
 				D9040DE313BF0B2400568F07 /* Cocoa.framework */,
 				D9040DE113BF0B0000568F07 /* GHUnit.framework */,
 				D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */,
@@ -244,6 +223,7 @@
 			isa = PBXGroup;
 			children = (
 				D9D12C0412A288F2003E40C5 /* tests_icon.png */,
+				D97AB74A13C75796006A65D3 /* BsonNetwork-Info.plist */,
 				AA747D9E0F9514B9006C5449 /* BsonNetwork_Prefix.pch */,
 				D9040DDB13BF09C300568F07 /* MacTests-Info.plist */,
 				D9040DDC13BF09C300568F07 /* MacTests-Prefix.pch */,
@@ -328,44 +308,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		D2AAC07A0554694100DB518D /* Headers */ = {
+		D9DB6AE713C73D3200C87760 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AA747D9F0F9514B9006C5449 /* BsonNetwork_Prefix.pch in Headers */,
-				D9D12257129EBB21003E40C5 /* BsonNetwork.h in Headers */,
-				D9D12266129EC446003E40C5 /* AsyncSocket.h in Headers */,
-				D9D12268129EC446003E40C5 /* AsyncUdpSocket.h in Headers */,
-				D9D122A8129EE460003E40C5 /* BNServer.h in Headers */,
-				D9D123D0129F4C02003E40C5 /* BNConnection.h in Headers */,
-				D981F13712C314B800AA5617 /* PortMapper.h in Headers */,
-				D9040DF913BF70BC00568F07 /* BNNode.h in Headers */,
-				D9040E3213BFCEF800568F07 /* BNRemoteService.h in Headers */,
-				D9442A5613C1531F007ABFE3 /* BNMessage.h in Headers */,
+				D9DB6AF713C73DE600C87760 /* BNConnection.h in Headers */,
+				D9DB6AF913C73DE600C87760 /* BNServer.h in Headers */,
+				D9DB6AFB13C73DE600C87760 /* BNMessage.h in Headers */,
+				D9DB6AFD13C73DE600C87760 /* BNNode.h in Headers */,
+				D9DB6B0613C73E8600C87760 /* AsyncSocket.h in Headers */,
+				D9DB6B0813C73E8600C87760 /* AsyncUdpSocket.h in Headers */,
+				D9DB6B0A13C73E8B00C87760 /* PortMapper.h in Headers */,
+				D9DB6AFF13C73DE600C87760 /* BNRemoteService.h in Headers */,
+				D9DB6B0113C73DE600C87760 /* BsonNetwork.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		D2AAC07D0554694100DB518D /* BsonNetwork */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "BsonNetwork" */;
-			buildPhases = (
-				D2AAC07A0554694100DB518D /* Headers */,
-				D2AAC07B0554694100DB518D /* Sources */,
-				D2AAC07C0554694100DB518D /* Frameworks */,
-				D9D12238129EB9E4003E40C5 /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = BsonNetwork;
-			productName = BsonNetwork;
-			productReference = D2AAC07E0554694100DB518D /* libBsonNetwork.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		D9040DB913BF08F100568F07 /* MacTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D9040DD713BF08F200568F07 /* Build configuration list for PBXNativeTarget "MacTests" */;
@@ -401,6 +362,25 @@
 			productReference = D9D1221A129EB8FB003E40C5 /* Tests.app */;
 			productType = "com.apple.product-type.application";
 		};
+		D9DB6AEB13C73D3200C87760 /* BsonNetwork */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D9DB6AF413C73D3200C87760 /* Build configuration list for PBXNativeTarget "BsonNetwork" */;
+			buildPhases = (
+				D9DB6AE613C73D3200C87760 /* Sources */,
+				D97AB65713C7438D006A65D3 /* Frameworks */,
+				D9DB6AE713C73D3200C87760 /* Headers */,
+				D9DB6AE813C73D3200C87760 /* ShellScript */,
+				D9DB6AE913C73D3200C87760 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BsonNetwork;
+			productName = BsonNetwork;
+			productReference = D9DB6AEC13C73D3200C87760 /* BsonNetwork.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -422,10 +402,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D2AAC07D0554694100DB518D /* BsonNetwork */,
 				D9D12219129EB8FB003E40C5 /* Tests */,
-				D9D12239129EBA0E003E40C5 /* Build framework */,
 				D9040DB913BF08F100568F07 /* MacTests */,
+				D9DB6AEB13C73D3200C87760 /* BsonNetwork */,
 			);
 		};
 /* End PBXProject section */
@@ -451,7 +430,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		D9D12238129EB9E4003E40C5 /* ShellScript */ = {
+		D9DB6AE813C73D3200C87760 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -462,9 +441,9 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "";
+			shellScript = "if [ \"${ACTION}\" = \"build\" ]\nthen\n\n# Product name should be ${TARGET_NAME}.framework anyway...\nFWK_NAME=\"${WRAPPER_NAME}\"\nFWK_LIB=\"${FWK_NAME}/${TARGET_NAME}\"\n\n# Set the target folders and the final framework product.\nFWK_PATH=\"${SYMROOT}/${CONFIGURATION}-framework\"\nDEV_PATH=\"${SYMROOT}/${CONFIGURATION}-iphoneos\"\nSIM_PATH=\"${SYMROOT}/${CONFIGURATION}-iphonesimulator\"\nFWK_ROOT=\"${FWK_PATH}/${FWK_NAME}\"\n\necho \"framework: building ${FWK_NAME}\"\n\necho \"framework: setting up framework directory structure\"\n\nmkdir -p \"${FWK_ROOT}\"\nrm -rf \"${FWK_ROOT}/\"*\n\nif [ $? -ne 0 ];then\n  echo \"error: failed to delete existing framework. check permissions?\"\n  exit\nfi\n\n# Build the canonical Framework bundle directory structure\nmkdir -p \"${FWK_ROOT}/Versions\"\nmkdir -p \"${FWK_ROOT}/Versions/${FRAMEWORK_VERSION}\"\nmkdir -p \"${FWK_ROOT}/Versions/${FRAMEWORK_VERSION}/Resources\"\nmkdir -p \"${FWK_ROOT}/Versions/${FRAMEWORK_VERSION}/Headers\"\n\nln -s \"${FRAMEWORK_VERSION}\" \"${FWK_ROOT}/Versions/Current\"\nln -s \"Versions/Current/Headers\" \"${FWK_ROOT}/Headers\"\nln -s \"Versions/Current/Resources\" \"${FWK_ROOT}/Resources\"\nln -s \"Versions/Current/${TARGET_NAME}\" \"${FWK_ROOT}/${TARGET_NAME}\"\n\n\nif [ ! -d \"${DEV_PATH}/${FWK_NAME}/Headers\" ]\nthen\n  echo \"error: Framework target \\\"${TARGET_NAME}\\\" did not copy any headers.\" \\\n   \"Make sure the desired headers are on the 'Copy Headers' Build Phase.\" \\\n   \"Make sure you built the Device target (from which headers are copied).\"\n  exit 1\nfi\n\n# Copy the header files to the final product folder.\necho \"framework: copying headers from ${DEV_PATH}/${FWK_NAME}/Headers\"\nditto \"${DEV_PATH}/${FWK_NAME}/Headers\" \"${FWK_ROOT}/Headers\"\n\n# Copy the header files to the final product folder.\necho \"framework: copying Info.plist file\"\ncp \"${DEV_PATH}/${FWK_NAME}/Info.plist\" \"${FWK_ROOT}/Resources/Info.plist\"\n\n# Use the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\necho \"framework: creating universal lib ${FWK_PATH}/${FWK_LIB}\"\nlipo -create \"${DEV_PATH}/${FWK_LIB}\" \"${SIM_PATH}/${FWK_LIB}\" \\\n     -output \"${FWK_ROOT}/Versions/Current/${TARGET_NAME}\"\n\nfi";
 		};
-		D9D1223F129EBA1D003E40C5 /* ShellScript */ = {
+		D9DB6AE913C73D3200C87760 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -475,26 +454,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = resources/framework.sh;
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]\nthen\n\n# Product name should be ${TARGET_NAME}.framework anyway...\nFWK_NAME=\"${WRAPPER_NAME}\"\nFWK_PATH=\"${SYMROOT}/${CONFIGURATION}-framework\"\nFWK_TARBALL=\"${RELEASE_TARBALL_FILE}\"\n\n\n# Package up\necho \"framework: packaging release tarball\"\ncd \"${FWK_PATH}\"\ntar -czf \"${TARGET_NAME}.tar.gz\" \"${FWK_NAME}\"\ncd \"${PROJECT_DIR}\"\ncp \"${FWK_PATH}/${TARGET_NAME}.tar.gz\" \"${RELEASE_TARBALL_FILE}\"\n\n\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		D2AAC07B0554694100DB518D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				D9D12267129EC446003E40C5 /* AsyncSocket.m in Sources */,
-				D9D12269129EC446003E40C5 /* AsyncUdpSocket.m in Sources */,
-				D9D122A9129EE460003E40C5 /* BNServer.m in Sources */,
-				D9D123D1129F4C02003E40C5 /* BNConnection.m in Sources */,
-				D981F13812C314B800AA5617 /* PortMapper.m in Sources */,
-				D9040DFA13BF70BC00568F07 /* BNNode.m in Sources */,
-				D9040E3313BFCEF800568F07 /* BNRemoteService.m in Sources */,
-				D9442A5713C1531F007ABFE3 /* BNMessage.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D9040DB613BF08F100568F07 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -539,15 +503,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		D9D1223D129EBA15003E40C5 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = D2AAC07D0554694100DB518D /* BsonNetwork */;
-			targetProxy = D9D1223C129EBA15003E40C5 /* PBXContainerItemProxy */;
+		D9DB6AE613C73D3200C87760 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9DB6AF813C73DE600C87760 /* BNConnection.m in Sources */,
+				D9DB6AFA13C73DE600C87760 /* BNServer.m in Sources */,
+				D9DB6AFC13C73DE600C87760 /* BNMessage.m in Sources */,
+				D9DB6AFE13C73DE600C87760 /* BNNode.m in Sources */,
+				D9DB6B0013C73DE600C87760 /* BNRemoteService.m in Sources */,
+				D9DB6B0713C73E8600C87760 /* AsyncSocket.m in Sources */,
+				D9DB6B0913C73E8600C87760 /* AsyncUdpSocket.m in Sources */,
+				D9DB6B0B13C73E8B00C87760 /* PortMapper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXTargetDependency section */
+/* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
 		D9040DC613BF08F200568F07 /* InfoPlist.strings */ = {
@@ -562,47 +533,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB921F08733DC00010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				COPY_PHASE_STRIP = NO;
-				DSTROOT = /tmp/BsonNetwork.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/lib\"",
-				);
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = BsonNetwork_Prefix.pch;
-				INSTALL_PATH = /usr/local/lib;
-				PRODUCT_NAME = BsonNetwork;
-				SDKROOT = iphoneos;
-			};
-			name = Debug;
-		};
-		1DEB922008733DC00010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
-				DSTROOT = /tmp/BsonNetwork.dst;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/lib\"",
-				);
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = BsonNetwork_Prefix.pch;
-				INSTALL_PATH = /usr/local/lib;
-				PRODUCT_NAME = BsonNetwork;
-			};
-			name = Release;
-		};
 		1DEB922308733DC00010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -644,6 +574,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/../dronestore/idrone2/lib\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -674,6 +605,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/../dronestore/idrone2/lib\"",
 				);
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
@@ -699,6 +631,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/../dronestore/idrone2/lib\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -738,6 +671,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/lib\"",
+					"\"$(SRCROOT)/../dronestore/idrone2/lib\"",
 				);
 				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
@@ -757,39 +691,79 @@
 			};
 			name = Release;
 		};
-		D9D1223A129EBA0E003E40C5 /* Debug */ = {
+		D9DB6AF513C73D3200C87760 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				PRODUCT_NAME = "Build framework";
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = 4.2;
+				HEADER_SEARCH_PATHS = (
+					"lib/**",
+					lib/cas,
+					"$(SRCROOT)/lib/bson-objc.framework/Headers",
+					"$(SRCROOT)/lib/bson-objc.framework/Versions/A/Headers",
+				);
+				INFOPLIST_FILE = "resources/BsonNetwork-Info.plist";
+				INFOPLIST_OUTPUT_FORMAT = xml;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RELEASE_TARBALL_FILE = "release/$(TARGET_NAME).tar.gz";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
 		};
-		D9D1223B129EBA0E003E40C5 /* Release */ = {
+		D9DB6AF613C73D3200C87760 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
-				PRODUCT_NAME = "Build framework";
-				ZERO_LINK = NO;
+				ALWAYS_SEARCH_USER_PATHS = YES;
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/lib\"",
+				);
+				FRAMEWORK_VERSION = A;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = 4.2;
+				HEADER_SEARCH_PATHS = (
+					"lib/**",
+					lib/cas,
+					"$(SRCROOT)/lib/bson-objc.framework/Headers",
+					"$(SRCROOT)/lib/bson-objc.framework/Versions/A/Headers",
+				);
+				INFOPLIST_FILE = "resources/BsonNetwork-Info.plist";
+				INFOPLIST_OUTPUT_FORMAT = xml;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				RELEASE_TARBALL_FILE = "release/$(TARGET_NAME).tar.gz";
+				SKIP_INSTALL = YES;
+				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "BsonNetwork" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1DEB921F08733DC00010E9CD /* Debug */,
-				1DEB922008733DC00010E9CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "BsonNetwork" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -817,11 +791,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D9D12245129EBA27003E40C5 /* Build configuration list for PBXAggregateTarget "Build framework" */ = {
+		D9DB6AF413C73D3200C87760 /* Build configuration list for PBXNativeTarget "BsonNetwork" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D9D1223A129EBA0E003E40C5 /* Debug */,
-				D9D1223B129EBA0E003E40C5 /* Release */,
+				D9DB6AF513C73D3200C87760 /* Debug */,
+				D9DB6AF613C73D3200C87760 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

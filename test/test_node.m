@@ -16,6 +16,7 @@
 
 @interface BNNodeTest : GHTestCase <BNNodeDelegate> {
 
+  int linkIdentifications;
   NSMutableArray *links;
   NSMutableDictionary *nodes;
   NSMutableDictionary *expect;
@@ -72,6 +73,10 @@
     name:BNNodeDisconnectedLinkNotification object:nil];
 
   [[NSNotificationCenter defaultCenter] addObserver:self
+    selector:@selector(identifiedLinkNotification:)
+    name:BNNodeIdentifiedLinkNotification object:nil];
+
+  [[NSNotificationCenter defaultCenter] addObserver:self
     selector:@selector(receivedMessageNotification:)
     name:BNNodeReceivedMessageNotification object:nil];
 
@@ -80,6 +85,7 @@
     name:BNNodeSentMessageNotification object:nil];
 
 
+  linkIdentifications = 0;
   links = [[NSMutableArray alloc] initWithCapacity:10];
   nodes = [[NSMutableDictionary alloc] initWithCapacity:10];
   expect = [[NSMutableDictionary alloc] initWithCapacity:10];
@@ -168,6 +174,14 @@
   [links removeObject:[notification.userInfo valueForKey:@"link"]];
 }
 
+
+- (void) identifiedLinkNotification:(NSNotification *) notification {
+  BNLink *link = [notification.userInfo valueForKey:@"link"];
+  GHAssertTrue([links containsObject:link], @"should contain link");
+
+  linkIdentifications++;
+}
+
 - (void) sentMessageNotification:(NSNotification *) notification {
 
   BNMessage *message = [notification.userInfo valueForKey:@"message"];
@@ -218,20 +232,26 @@
 - (void) testBA_simpleConnect {
 
   BNNode *node1 = [nodes valueForKey:@"client1"];
-  BNNode *node2 = [nodes valueForKey:@"client2"];
   [node1.server connectToAddress:@"localhost:1342"];
 
-  WAIT_WHILE([links count] < 2);
+  WAIT_WHILE([links count] < 2 && linkIdentifications < 2);
 
+}
+
+- (void) testBB_simpleConnectLinkCheck {
   BNLink *l1 = [links objectAtIndex:0];
   BNLink *l2 = [links objectAtIndex:1];
+
+  BNNode *node1 = [nodes valueForKey:l2.name];
+  BNNode *node2 = [nodes valueForKey:l1.name];
+
+
   GHAssertNotNil(l1, @"Link should be established.");
   GHAssertNotNil(l2, @"Link should be established.");
   GHAssertNotNil(l1.connection, @"Connection should be established.");
   GHAssertNotNil(l2.connection, @"Connection should be established.");
   GHAssertTrue(l1.connection.isConnected, @"Connection should be established.");
   GHAssertTrue(l2.connection.isConnected, @"Connection should be established.");
-
 
   GHAssertTrue(
     ([l1.name isEqualToString:node1.name] &&
@@ -241,7 +261,7 @@
       @"Node names must match.");
 }
 
-- (void) testBB_simpleSending {
+- (void) testBBB_simpleSending {
   NSDictionary *dict = [NSMutableDictionary dictionary];
   [dict setValue:@"Herp" forKey:@"Derp"];
   BNMessage *msg = [BNMessage messageWithContents:dict];
@@ -275,6 +295,7 @@
   }
   GHAssertTrue([node2 sendMessage:msg], @"Should send ok.");
 }
+
 
 - (void) testBD_simpleSimultaneous {
   NSDictionary *dict = [NSMutableDictionary dictionary];
@@ -339,7 +360,52 @@
     [self testBE_simpleMultiple];
 }
 
-- (void) testBG_simpleDisconnect {
+
+- (void) testBG_simpleReidentify {
+  NSDictionary *dict = [NSMutableDictionary dictionary];
+  [dict setValue:@"Herp" forKey:@"Derp"];
+
+
+  BNNode *node1 = [nodes valueForKey:@"client1"];
+  BNNode *node2 = [nodes valueForKey:@"client2"];
+
+  node1.name = @"client3";
+
+  WAIT_WHILE(linkIdentifications < 3);
+
+  GHAssertTrue([links count] == 2, @"link count must be 2.");
+  [self testBB_simpleConnectLinkCheck];
+
+  BNMessage *msg1 = [BNMessage messageWithContents:dict];
+  msg1.source = @"client3";
+  msg1.destination = @"client2";
+
+  BNMessage *msg2 = [BNMessage messageWithContents:dict];
+  msg2.source = @"client2";
+  msg2.destination = @"client3";
+
+  NSData *data1 = [msg1.contents BSONRepresentation];
+  NSData *data2 = [msg2.contents BSONRepresentation];
+
+  @synchronized(expect) {
+    [[expect valueForKey:node1.name] addObject:data2];
+    [[expect valueForKey:node2.name] addObject:data1];
+  }
+
+  GHAssertTrue([node1 sendMessage:msg1], @"Should send ok.");
+  GHAssertTrue([node2 sendMessage:msg2], @"Should send ok.");
+
+  [self waitForAllExpected];
+
+  node1.name = @"client1";
+
+  WAIT_WHILE(linkIdentifications < 4);
+
+  GHAssertTrue([links count] == 2, @"link count must be 2.");
+  [self testBB_simpleConnectLinkCheck];
+}
+
+- (void) testBH_simpleDisconnect {
 
   if ([links count] == 0)
     [self testBA_simpleConnect];

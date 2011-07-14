@@ -22,6 +22,7 @@
 // Notifications Thrown:
 extern NSString * const BNNodeConnectedLinkNotification;
 extern NSString * const BNNodeDisconnectedLinkNotification;
+extern NSString * const BNNodeIdentifiedLinkNotification;
 
 extern NSString * const BNNodeReceivedMessageNotification;
 extern NSString * const BNNodeSentMessageNotification;
@@ -38,7 +39,7 @@ extern NSString * const BNNodeSentMessageNotification;
   id<BNNodeDelegate> delegate;
 }
 
-@property (copy, readonly) NSString * name;
+@property (nonatomic, copy) NSString * name;
 @property (readonly) BNServer * server;
 @property (assign) id<BNNodeDelegate> delegate;
 
@@ -62,8 +63,8 @@ extern NSString * const BNNodeSentMessageNotification;
   BNConnection * connection;
 }
 
-@property (copy, readonly) NSString * name;
-@property (readonly) BNConnection * connection;
+@property (copy) NSString * name;
+@property (retain) BNConnection * connection;
 
 - (id) initWithName:(NSString *)name andConnection:(BNConnection *)conn;
 
