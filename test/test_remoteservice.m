@@ -11,7 +11,8 @@
 #ifndef WAIT_WHILE
 #define WAIT_WHILE(condition) \
   for (int i = 0; (condition) && i < 10000; i++) \
-    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate dateWithTimeIntervalSinceNow:0.5]];
+    [[NSRunLoop currentRunLoop] runUntilDate:[NSDate \
+      dateWithTimeIntervalSinceNow:0.5]];
     // [NSThread sleepForTimeInterval:0.5]; // main thread apparently.
 #endif
 

@@ -47,6 +47,9 @@ NSString * const BNRemoteServiceSentMessageNotification =
 }
 
 - (void) dealloc {
+
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+
   [node release];
   [name release];
   [lastReceivedDate release];

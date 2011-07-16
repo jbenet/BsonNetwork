@@ -111,7 +111,7 @@
 		D97AB74B13C758B1006A65D3 /* BsonNetwork.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; name = BsonNetwork.tar.gz; path = release/BsonNetwork.tar.gz; sourceTree = "<group>"; };
 		D981F13412C314B100AA5617 /* PortMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PortMapper.h; sourceTree = "<group>"; };
 		D981F13512C314B100AA5617 /* PortMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PortMapper.m; sourceTree = "<group>"; };
-		D9BF42EE13CC35B600ACB204 /* BsonNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BsonNetwork.framework; path = "../Release-framework/BsonNetwork.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D9CD42F513D1795C00CA3D75 /* BsonNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BsonNetwork.framework; path = release/BsonNetwork.framework; sourceTree = "<group>"; };
 		D9D1219B129EB294003E40C5 /* Framework.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Framework.plist; sourceTree = "<group>"; };
 		D9D1219C129EB294003E40C5 /* framework.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = framework.sh; sourceTree = "<group>"; };
 		D9D121C2129EB2E7003E40C5 /* GHUnitIOS.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GHUnitIOS.framework; path = lib/GHUnitIOS.framework; sourceTree = "<group>"; };
@@ -185,7 +185,7 @@
 				D9D1221A129EB8FB003E40C5 /* Tests.app */,
 				D9040DBA13BF08F200568F07 /* MacTests.app */,
 				D9DB6AEC13C73D3200C87760 /* BsonNetwork.framework */,
-				D9BF42EE13CC35B600ACB204 /* BsonNetwork.framework */,
+				D9CD42F513D1795C00CA3D75 /* BsonNetwork.framework */,
 				D97AB74B13C758B1006A65D3 /* BsonNetwork.tar.gz */,
 			);
 			name = products;
@@ -454,7 +454,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]\nthen\n\n# Product name should be ${TARGET_NAME}.framework anyway...\nFWK_NAME=\"${WRAPPER_NAME}\"\nFWK_PATH=\"${SYMROOT}/${CONFIGURATION}-framework\"\nFWK_TARBALL=\"${RELEASE_TARBALL_FILE}\"\n\n\n# Package up\necho \"framework: packaging release tarball\"\ncd \"${FWK_PATH}\"\ntar -czf \"${TARGET_NAME}.tar.gz\" \"${FWK_NAME}\"\ncd \"${PROJECT_DIR}\"\ncp \"${FWK_PATH}/${TARGET_NAME}.tar.gz\" \"${RELEASE_TARBALL_FILE}\"\n\n\nfi";
+			shellScript = "if [ \"${CONFIGURATION}\" = \"Release\" ]\nthen\n\n# Product name should be ${TARGET_NAME}.framework anyway...\nFWK_NAME=\"${WRAPPER_NAME}\"\nFWK_PATH=\"${SYMROOT}/${CONFIGURATION}-framework\"\nFWK_TARBALL=\"${RELEASE_TARBALL_FILE}\"\n\n\n# Package up\nTARBALL_PATH=`dirname \"${RELEASE_TARBALL_FILE}\"`\nTARBALL_FILENAME=`basename \"${RELEASE_TARBALL_FILE}\"`\necho \"framework: packaging release tarball\"\nmkdir -p \"${TARBALL_PATH}\"\ncp -r \"${FWK_PATH}/${FWK_NAME}\" \"${TARBALL_PATH}/.\"\ncd \"${TARBALL_PATH}\"\ntar -czf \"${TARBALL_FILENAME}\" \"${FWK_NAME}\"\n\nfi";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -54,12 +54,21 @@ typedef enum {
   return self;
 }
 
-- (void) dealloc {
+- (oneway void) release {
   if ([NSThread currentThread] != thread_) {
-    [self performSelector:@selector(dealloc) onThread:thread_
-      withObject:nil waitUntilDone:YES];
+    [self performSelector:@selector(release) onThread:thread_
+               withObject:nil waitUntilDone:YES];
     return;
   }
+  
+  [super release];
+}
+
+
+- (void) dealloc {
+
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+
 
   // Unmap
   [mapper_ release];

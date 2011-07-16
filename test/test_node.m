@@ -105,6 +105,9 @@
 }
 
 - (void) tearDownClass {
+
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+
   [links release];
   [nodes release];
   [expect release];

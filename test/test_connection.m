@@ -84,6 +84,9 @@ static NSString *kHOST4 = @"localhost:1340";
 }
 
 - (void)tearDownClass {
+
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+
   for (BNConnection *conn in [connections allValues])
     [conn disconnect];
   [connections release];
