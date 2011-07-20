@@ -695,6 +695,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					"$(ARHCS_STANDARD_64_BIT)",
+					x86_64,
+				);
 				DEAD_CODE_STRIPPING = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -723,6 +728,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RELEASE_TARBALL_FILE = "release/$(TARGET_NAME).tar.gz";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv6 armv7 x86_64 i386";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Debug;
@@ -731,6 +737,11 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = YES;
+				ARCHS = (
+					"$(ARCHS_STANDARD_32_BIT)",
+					"$(ARHCS_STANDARD_64_BIT)",
+					x86_64,
+				);
 				DEAD_CODE_STRIPPING = NO;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -757,6 +768,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RELEASE_TARBALL_FILE = "release/$(TARGET_NAME).tar.gz";
 				SKIP_INSTALL = YES;
+				VALID_ARCHS = "armv6 armv7 x86_64 i386";
 				WRAPPER_EXTENSION = framework;
 			};
 			name = Release;

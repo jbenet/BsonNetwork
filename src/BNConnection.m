@@ -4,6 +4,8 @@
 //  Created by Juan Batiz-Benet 2010.
 //  MIT License, see LICENSE file for details.
 //
+#import <arpa/inet.h>  // for IPPROTO_TCP
+#import <netinet/tcp.h> // for TCP_NODELAY
 
 #import "BNConnection.h"
 #import "AsyncSocket.h"
@@ -252,6 +254,11 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   if (address == nil)
     address = [[[self class] addressWithHost:host andPort:port] retain];
 
+  CFSocketRef cfsock = [sock getCFSocket];
+  CFSocketNativeHandle rawsock = CFSocketGetNative(cfsock);
+  int flag = 1;
+  setsockopt(rawsock, IPPROTO_TCP, TCP_NODELAY, (char *)&flag, sizeof(int));
+
   state = BNConnectionConnected;
   [delegate connectionStateDidChange:self];
   NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -269,7 +276,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 
   [buffer_ appendData:data];
 
-  if (__dataContainsWholeDocument(buffer_)) {
+  while (__dataContainsWholeDocument(buffer_)) {
     // NSLog(@"Received: %@", data);
     NSRange docRange = NSMakeRange(0, __lengthOfFirstBSONDocument(buffer_));
     NSData *doc = [buffer_ subdataWithRange:docRange];
