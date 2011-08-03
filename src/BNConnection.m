@@ -270,7 +270,7 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
 - (void)onSocket:(AsyncSocket *)sock didReadData:(NSData *)data
   withTag:(long)tag {
   if (!buffer_) {
-    // NSLog(@"Connection without a buffer received data.");
+    // NSLog(@"ERROR: Connection without a buffer received data.");
     return;
   }
 
