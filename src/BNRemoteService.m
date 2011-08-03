@@ -202,6 +202,8 @@ NSString * const BNRemoteServiceSentMessageNotification =
   if (message)
     [super sendMessage:message];
 
+  periodicTrickleTimeout_ = 0; // reset timer :)
+  nextTrickleTimeout_ = 1;
   return YES;
 }
 
@@ -235,17 +237,21 @@ NSString * const BNRemoteServiceSentMessageNotification =
 
 
 - (void) __periodicTimer {
-
-  periodicTrickleTimeout_--;
-  if (periodicTrickleTimeout_ > 0)
-    return;
+  static NSUInteger lastSeqNo = 0;
 
   BNMessage * message  = [queue_ dequeueSendMessage];
-  if (message)
-    [super sendMessage:message];
+  if (!message)
+    return;
+
+  periodicTrickleTimeout_--;
+  if (periodicTrickleTimeout_ > 0 && lastSeqNo <= message.seqNo)
+    return;
+
+  lastSeqNo = message.seqNo;
+  [super sendMessage:message];
 
   periodicTrickleTimeout_ = nextTrickleTimeout_;
-  nextTrickleTimeout_ *= 2;
+  nextTrickleTimeout_ = MIN(nextTrickleTimeout_ * 2, 15);
 }
 
 - (id) retain {
