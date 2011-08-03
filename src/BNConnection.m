@@ -279,12 +279,21 @@ static inline BOOL __dataContainsWholeDocument(NSData *data) {
   while (__dataContainsWholeDocument(buffer_)) {
     // NSLog(@"Received: %@", data);
     NSRange docRange = NSMakeRange(0, __lengthOfFirstBSONDocument(buffer_));
-    NSData *doc = [buffer_ subdataWithRange:docRange];
+
+    // these should happen back to back in case calling out to a delegate
+    // happens to trigger another read (this can happen if the delegates
+    // explicitly let the runLoop run without returning):
+    NSData *doc = [NSData dataWithBytes:[buffer_ bytes] length:docRange.length];
+    [doc retain];
+
+    [buffer_ replaceBytesInRange:docRange withBytes:NULL length:0];
+
     if ([delegate respondsToSelector:@selector(connection:receivedBSONData:)])
       [delegate connection:self receivedBSONData:doc];
     if ([delegate respondsToSelector:@selector(connection:receivedDictionary:)])
       [delegate connection:self receivedDictionary:[doc BSONValue]];
-    [buffer_ replaceBytesInRange:docRange withBytes:NULL length:0];
+
+    [doc release];
     tag = 1;
   }
 
