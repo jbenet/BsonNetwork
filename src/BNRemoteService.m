@@ -244,14 +244,14 @@ NSString * const BNRemoteServiceSentMessageNotification =
     return;
 
   periodicTrickleTimeout_--;
-  if (periodicTrickleTimeout_ > 0 && lastSeqNo <= message.seqNo)
+  if (periodicTrickleTimeout_ > 0 && lastSeqNo > message.seqNo)
     return;
 
   lastSeqNo = message.seqNo;
   [super sendMessage:message];
 
   periodicTrickleTimeout_ = nextTrickleTimeout_;
-  nextTrickleTimeout_ = MIN(nextTrickleTimeout_ * 2, 15);
+  nextTrickleTimeout_ = MIN(nextTrickleTimeout_ * 2, 20);
 }
 
 - (id) retain {
