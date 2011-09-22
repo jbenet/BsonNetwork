@@ -173,7 +173,7 @@ NSString * const BNRemoteServiceSentMessageNotification =
 
 //    [exec release];
 
-    periodicTrickleTimeout_ = 0;
+    trickleTimeout_ = 0;
     nextTrickleTimeout_ = 1;
   }
   return self;
@@ -202,7 +202,7 @@ NSString * const BNRemoteServiceSentMessageNotification =
   if (message)
     [super sendMessage:message];
 
-  periodicTrickleTimeout_ = 0; // reset timer :)
+  trickleTimeout_ = 0; // reset timer :)
   nextTrickleTimeout_ = 1;
   return YES;
 }
@@ -243,14 +243,14 @@ NSString * const BNRemoteServiceSentMessageNotification =
   if (!message)
     return;
 
-  periodicTrickleTimeout_--;
-  if (periodicTrickleTimeout_ > 0 && lastSeqNo > message.seqNo)
+  trickleTimeout_--;
+  if (trickleTimeout_ > 0 && lastSeqNo > 0 && lastSeqNo >= message.seqNo)
     return;
 
   lastSeqNo = message.seqNo;
   [super sendMessage:message];
 
-  periodicTrickleTimeout_ = nextTrickleTimeout_;
+  trickleTimeout_ = nextTrickleTimeout_;
   nextTrickleTimeout_ = MIN(nextTrickleTimeout_ * 2, 20);
 }
 

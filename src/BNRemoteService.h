@@ -53,7 +53,7 @@ extern NSString * const BNRemoteServiceSentMessageNotification;
 @interface BNReliableRemoteService : BNRemoteService {
   BNMessageQueue *queue_;
   NSTimer *periodicTimer_;
-  int periodicTrickleTimeout_;
+  int trickleTimeout_;
   int nextTrickleTimeout_;
 }
 
